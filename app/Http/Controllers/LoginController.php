@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use Log;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\Input;
 
 class LoginController extends Controller
 {
@@ -113,6 +115,26 @@ public function login(){
 }
 
 public function login1(){
+  if (
+    Auth::validate(
+                    array(
+                          'email' => Request::get('email'),
+                          'password' => Request::get('password')
+                          )
+                        )
+      )
+
+  //if (Auth::attempt(['email' => Request::get('email'), 'password' => Request::get('password')]))
+  {
+      Log::info('Showing user profile for user: ');
+
+    return 'Done';
+//      return redirect()->intended('checkout');
+  }
+  else {
+    # code..
+    return 'dummy' . Request::get('email') . '   --- '  . Request::get('password');
+  }
   return 'login';
 }
     /**

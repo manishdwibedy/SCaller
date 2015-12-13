@@ -57,14 +57,23 @@
                         		</div>
                             <div class="form-bottom">
 			                    <form role="form" action="{{url('auth/login')}}" method="get" class="login-form">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
 			                    	<div class="form-group">
-			                    		<label class="sr-only" for="form-username">Username</label>
-			                        	<input type="text" name="form-username" placeholder="Username..." class="form-username form-control" id="form-username">
+			                    		<label class="sr-only" for="">Username</label>
+			                        	<input type="text" name="email" placeholder="Username..." class="email form-control" id="email">
 			                        </div>
 			                        <div class="form-group">
-			                        	<label class="sr-only" for="form-password">Password</label>
-			                        	<input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
+			                        	<label class="sr-only" for="password">Password</label>
+			                        	<input type="password" name="password" placeholder="Password..." class="password form-control" id="password">
 			                        </div>
+                              <div class="form-group">
+                                <span>
+                                      <input name="remember" id="remember" type="checkbox" class="checkbox">
+                                      Keep me signed in
+                                  </span>
+                              </div>
+
 			                        <button type="submit" class="btn">Sign in!</button>
 			                    </form>
 		                    </div>
