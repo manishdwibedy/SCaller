@@ -9,14 +9,23 @@
 | It's a breeze. Simply tell Laravel the URIs it should respond to
 | and give it the controller to call when that URI is requested.
 |
-*/
-/*
-Route::get('/', function () {
-    #return view('welcome');
-    return 'hi';
-});*/
 
 
 Route::get('/', function () {
+
     return view('login');
 });
+*/
+
+
+
+
+
+
+// Authentication routes...
+// Authentication routes...
+//Route::get('auth/login', 'LoginController@login');
+Route::any('auth/login', 'LoginController@login1');
+Route::get('/', 'LoginController@login');
+//Route::post('auth/login', 'LoginController@login1');
+Route::get('auth/logout', 'LoginController@logout');
