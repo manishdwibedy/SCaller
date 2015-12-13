@@ -254,8 +254,7 @@
                   <li class="user-header">
                     <img src="images/user2-160x160.jpg" class="img-circle" alt="User Image">
                     <p>
-                      Alexander Pierce - Web Developer
-                      <small>Member since Nov. 2012</small>
+                      <span class="hidden-xs">{{Auth::user() ? Auth::user()->name : 'Account'}}</span>
                     </p>
                   </li>
                   <!-- Menu Body -->
@@ -299,7 +298,9 @@
               <img src="images/user2-160x160.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-              <p>Alexander Pierce</p>
+              <p>
+                {{Auth::user() ? Auth::user()->name : 'Account'}}
+              </p>
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>

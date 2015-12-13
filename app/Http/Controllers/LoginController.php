@@ -110,31 +110,31 @@ class LoginController extends Controller
         return 'hhi';
     }
 
-public function login(){
-  return view('login');
-}
+    public function login(){
+      return view('login');
+    }
 
-public function login1(){
-  if (Auth::attempt(array('email' => Request::get('email'),'password' => Request::get('password'))))
-  {
-      Log::info('Showing user profile for user: ' );
-      return redirect()->intended('home');
-  }
-  else {
-    return 'dummy' . Request::get('email') . '   --- '  . Request::get('password');
-  }
-  return 'login';
-}
+    public function login1(){
+      if (Auth::attempt(array('email' => Request::get('email'),'password' => Request::get('password'))))
+      {
+          Log::info('Showing user profile for user: ' );
+          return redirect()->intended('home');
+      }
+      else {
+        return 'dummy' . Request::get('email') . '   --- '  . Request::get('password');
+      }
+      return 'login';
+    }
 
-public function home(){
-  return view('home');
-}
+    public function home(){
+        return view('home');
+    }
     /**
      * Logging out the current user
      */
     public function logout() {
         Auth::logout();
 
-        return Redirect::away('login');
+        return Redirect::away('/');
     }
 }
