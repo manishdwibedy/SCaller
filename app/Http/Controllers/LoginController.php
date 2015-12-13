@@ -115,27 +115,20 @@ public function login(){
 }
 
 public function login1(){
-  if (
-    Auth::validate(
-                    array(
-                          'email' => Request::get('email'),
-                          'password' => Request::get('password')
-                          )
-                        )
-      )
-
-  //if (Auth::attempt(['email' => Request::get('email'), 'password' => Request::get('password')]))
+  if (Auth::validate(array('email' => Request::get('email'),'password' => Request::get('password'))))
   {
       Log::info('Showing user profile for user: ');
-
-    return 'Done';
-//      return redirect()->intended('checkout');
+      //return 'Done';
+      return redirect()->intended('home');
   }
   else {
-    # code..
     return 'dummy' . Request::get('email') . '   --- '  . Request::get('password');
   }
   return 'login';
+}
+
+public function home(){
+  return view('home');
 }
     /**
      * Logging out the current user

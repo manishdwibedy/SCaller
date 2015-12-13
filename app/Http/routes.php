@@ -16,16 +16,11 @@ Route::get('/', function () {
     return view('login');
 });
 */
-
-
-
-
-
-
-// Authentication routes...
 // Authentication routes...
 //Route::get('auth/login', 'LoginController@login');
 Route::any('auth/login', 'LoginController@login1');
 Route::get('/', 'LoginController@login');
 //Route::post('auth/login', 'LoginController@login1');
 Route::get('auth/logout', 'LoginController@logout');
+
+Route::get('home', 'LoginController@home');
