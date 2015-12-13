@@ -1,3 +1,3 @@
 <?php
-echo "{{url('auth/login')}}";
+phpinfo();
  ?>

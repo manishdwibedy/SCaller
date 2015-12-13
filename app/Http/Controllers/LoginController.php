@@ -115,10 +115,9 @@ public function login(){
 }
 
 public function login1(){
-  if (Auth::validate(array('email' => Request::get('email'),'password' => Request::get('password'))))
+  if (Auth::attempt(array('email' => Request::get('email'),'password' => Request::get('password'))))
   {
-      Log::info('Showing user profile for user: ');
-      //return 'Done';
+      Log::info('Showing user profile for user: ' );
       return redirect()->intended('home');
   }
   else {

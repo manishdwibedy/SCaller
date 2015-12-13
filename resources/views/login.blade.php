@@ -57,7 +57,7 @@
                         		</div>
                             <div class="form-bottom">
 			                    <form role="form" action="{{url('auth/login')}}" method="get" class="login-form">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            {!! csrf_field() !!}
 
 			                    	<div class="form-group">
 			                    		<label class="sr-only" for="">Username</label>
