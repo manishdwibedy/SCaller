@@ -67,9 +67,9 @@
 			                        	<input type="password" name="password" placeholder="Password..." class="password form-control" id="password">
 			                        </div>
                               <div class="form-group">
-                                <span>
-                                      <input name="remember" id="remember" type="checkbox" class="checkbox"> Keep me signed in
-                                  </span>
+                                <input name="remember" id="remember" type="checkbox" class="checkbox">
+                                Keep me signed in
+
                               </div>
 
 			                        <button type="submit" class="btn">Sign in!</button>
