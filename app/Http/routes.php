@@ -23,4 +23,4 @@ Route::get('/', 'LoginController@login');
 //Route::post('auth/login', 'LoginController@login1');
 Route::get('auth/logout', 'LoginController@logout');
 
-Route::get('home', 'LoginController@home');
+Route::get('home',  ['middleware' => 'auth', 'uses' => 'LoginController@home']);

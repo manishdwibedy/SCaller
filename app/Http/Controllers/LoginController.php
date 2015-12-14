@@ -121,9 +121,8 @@ class LoginController extends Controller
           return redirect()->intended('home');
       }
       else {
-        return 'dummy' . Request::get('email') . '   --- '  . Request::get('password');
+          return view('login');
       }
-      return 'login';
     }
 
     public function home(){
