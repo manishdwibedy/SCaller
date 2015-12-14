@@ -91,43 +91,17 @@ class LoginController extends Controller
     }
 
     /**
-     * Trying to authenticate the user
+     * Trying to login the user
      */
-    public function authenticate() {
-      Log::info('Showing user profile for user:111');
-/*
-        if (Auth::attempt(['email' => Request::get('form-username'), 'password' => Request::get('form-password')]))
-        {
-            Log::info('Showing user profile for user: ');
-
-          //return 'Done';
-      //      return redirect()->intended('checkout');
-        } else
-        {
-            //return 'Error';
-        //    return view('login', array('title' => 'Welcome', 'description' => '', 'page' => 'home'));
-      }*/
-        return 'hhi';
-    }
-
     public function login(){
-      return view('login');
-    }
-
-    public function login1(){
       if (Auth::attempt(array('email' => Request::get('email'),'password' => Request::get('password'))))
       {
           Log::info('Showing user profile for user: ' );
           return redirect()->intended('home');
       }
-      else {
-          return view('login');
-      }
+      return view('login');
     }
 
-    public function home(){
-        return view('home');
-    }
     /**
      * Logging out the current user
      */
@@ -136,4 +110,12 @@ class LoginController extends Controller
 
         return Redirect::away('/');
     }
+
+    /**
+     * Returns the user to the home page
+     */
+    public function home(){
+        return view('home');
+    }
+
 }

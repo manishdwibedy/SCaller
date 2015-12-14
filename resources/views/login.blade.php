@@ -55,7 +55,7 @@
                         		</div>
                         		</div>
                             <div class="form-bottom">
-			                    <form role="form" action="{{url('auth/login')}}" method="get" class="login-form">
+			                    <form role="form" action="{{url('auth/login')}}" method="post" class="login-form">
                             {!! csrf_field() !!}
 
 			                    	<div class="form-group">
