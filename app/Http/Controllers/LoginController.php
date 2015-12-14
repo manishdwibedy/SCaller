@@ -94,6 +94,7 @@ class LoginController extends Controller
     {
       return view('login')->with('err','');
     }
+
     /**
      * Trying to login the user
      */

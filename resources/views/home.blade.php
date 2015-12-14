@@ -8,7 +8,7 @@
       @include('common.title')
 
       <!-- Left side column. contains the logo and sidebar -->
-      @include('common.left-menu')
+      @include('common.left-menu', ['page' => $page])
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -16,6 +16,9 @@
         <section class="content-header">
           <h1>
             Dashboard
+            @if ($page === 'home')
+             Hey
+            @endif
             <small>Control panel</small>
           </h1>
           <ol class="breadcrumb">
