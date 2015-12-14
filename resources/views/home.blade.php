@@ -16,9 +16,6 @@
         <section class="content-header">
           <h1>
             Dashboard
-            @if ($page === 'home')
-             Hey
-            @endif
             <small>Control panel</small>
           </h1>
           <ol class="breadcrumb">
