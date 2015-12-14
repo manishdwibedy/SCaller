@@ -21,9 +21,6 @@ class AuthController extends Controller
     |
     */
 
-    protected $loginPath = '/'; // path to the login URL
-    protected $redirectPath = '/home'; // path to the route where you want users to be redirected once logged in
-    protected $redirectTo = '/home'; // path you're sent to once you've reset your password
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
