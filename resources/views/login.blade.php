@@ -53,6 +53,15 @@
                         		<div class="form-top-center logo">
                         			<img src="/images/RuffaloCody.png">
                         		</div>
+                            <?php
+                            if($err)
+                            {
+                            ?>
+                              <div class="alert alert-danger login-error" role="alert">Invalid username/password</div>
+                            <?php
+                            }
+                            ?>
+
                         		</div>
                             <div class="form-bottom">
 			                    <form role="form" action="{{url('auth/login')}}" method="post" class="login-form">
@@ -69,6 +78,7 @@
                               <div class="form-group">
                                 <input name="remember" id="remember" type="checkbox" class="checkbox">
                                 Keep me signed in
+
 
                               </div>
 

@@ -19,8 +19,8 @@ Route::get('/', function () {
 // Authentication routes...
 //Route::get('auth/login', 'LoginController@login');
 //Route::any('auth/login', 'LoginController@login1');
-Route::get('/', 'LoginController@login');
-Route::post('auth/login', 'LoginController@login');
+Route::get('/', 'LoginController@showLogin');
+Route::post('auth/login', 'LoginController@attemptLogin');
 Route::get('auth/logout', 'LoginController@logout');
 
 Route::get('home',  ['middleware' => 'auth', 'uses' => 'LoginController@home']);

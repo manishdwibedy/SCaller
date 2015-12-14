@@ -90,16 +90,23 @@ class LoginController extends Controller
         //
     }
 
+    public function showLogin()
+    {
+      return view('login')->with('err','');
+    }
     /**
      * Trying to login the user
      */
-    public function login(){
+    public function attemptLogin(){
       if (Auth::attempt(array('email' => Request::get('email'),'password' => Request::get('password'))))
       {
-          Log::info('Showing user profile for user: ' );
+          Log::info('Trying to login' );
           return redirect()->intended('home');
       }
-      return view('login');
+      else{
+          Log::info('Login failed');
+          return view('login')->with('err', 'Wrong username');
+      }
     }
 
     /**
@@ -115,7 +122,7 @@ class LoginController extends Controller
      * Returns the user to the home page
      */
     public function home(){
-        return view('home');
+        return view('home' , ['page' => 'home']);
     }
 
 }

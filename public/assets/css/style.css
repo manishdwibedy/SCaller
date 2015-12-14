@@ -191,3 +191,7 @@ img { max-width: 100%; }
   display: initial;
   margin-right: 10px !important;
 }
+
+.login-error{
+  margin: 0px;
+}
