@@ -16,6 +16,19 @@ class CreateUser extends Seeder
             'name' => 'admin',
             'email' => 'manish.dwibedy@gmail.com',
             'password' => bcrypt('admin'),
+            'type' => 'manager'
+        ]);
+        DB::table('users')->insert([
+            'name' => 'caller',
+            'email' => 'caller@gmail.com',
+            'password' => bcrypt('caller'),
+            'type' => 'caller'
+        ]);
+        DB::table('users')->insert([
+            'name' => 'super',
+            'email' => 'super@gmail.com',
+            'password' => bcrypt('super'),
+            'type' => 'supervisor'
         ]);
     }
 }
