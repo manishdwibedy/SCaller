@@ -17,21 +17,3 @@
 <!-- AdminLTE Skins. Choose a skin from the css/skins
      folder instead of downloading all of them to reduce the load. -->
 {!! HTML::style('css/skins/_all-skins.min.css') !!}
-<!-- iCheck -->
-{!! HTML::style('plugins/iCheck/flat/blue.css') !!}
-<!-- Morris chart -->
-{!! HTML::style('plugins/morris/morris.css') !!}
-<!-- jvectormap -->
-{!! HTML::style('plugins/jvectormap/jquery-jvectormap-1.2.2.css') !!}
-<!-- Date Picker -->
-{!! HTML::style('plugins/datepicker/datepicker3.css') !!}
-<!-- Daterange picker -->
-{!! HTML::style('plugins/daterangepicker/daterangepicker-bs3.css') !!}
-<!-- bootstrap wysihtml5 - text editor -->
-{!! HTML::style('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') !!}
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
