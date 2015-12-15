@@ -51,9 +51,13 @@
             </div>
 
           </div>
+          @if (Auth::user()->type == 'manager')
+          asas
+          @endif
+
+ {{       Auth::user()->type }}
 
 
-    
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
