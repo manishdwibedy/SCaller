@@ -147,7 +147,7 @@ return [
 
         Illuminate\Html\HtmlServiceProvider::class,
 
-        Bican\Roles\RolesServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class
 
     ],
 
@@ -199,7 +199,11 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
 
         'Form'=> 'Illuminate\Html\FormFacade',
-        'HTML'=> 'Illuminate\Html\HtmlFacade'
+        'HTML'=> 'Illuminate\Html\HtmlFacade',
+
+        'Entrust' => 'Zizaco\Entrust\EntrustFacade',
+        
+
 
 
     ],
