@@ -13,7 +13,7 @@ class CreateUser extends Seeder
     {
         //create admin user
         DB::table('users')->insert([
-            'name' => 'admin',
+            'name' => 'Manish Dwibedy',
             'email' => 'manish.dwibedy@gmail.com',
             'password' => bcrypt('admin'),
             'type' => 'manager'
