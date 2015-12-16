@@ -202,7 +202,7 @@ return [
         'HTML'=> 'Illuminate\Html\HtmlFacade',
 
         'Entrust' => 'Zizaco\Entrust\EntrustFacade',
-        
+
 
 
 

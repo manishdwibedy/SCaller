@@ -36,7 +36,7 @@
         </ul>
       </li>
 
-      @if (Auth::user()->type == 'manager')
+      @if (Entrust::hasRole('admin'))
       <li class="treeview">
         <a href="#">
           <i class="fa fa-files-o"></i>
