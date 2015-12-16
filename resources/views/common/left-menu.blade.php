@@ -27,21 +27,25 @@
     <ul class="sidebar-menu">
       <li class="header">MAIN NAVIGATION  </li>
       <li class="{{ $page === 'home' ? 'active' : ''}} treeview">
-        <a href="#">
-          <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
+        <a href="home">
+          <i class="fa fa-dashboard"></i> <span>Dashboard</span>
         </a>
-        <ul class="treeview-menu">
-          <li class="{{ $page === 'home' ? 'active' : ''}}"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-          <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
-        </ul>
       </li>
 
-      @if (Entrust::hasRole('admin'))
+      @if (Entrust::hasRole('caller'))
       <li class="treeview">
-        <a href="#">
+        <a href="schedule">
           <i class="fa fa-files-o"></i>
-          <span>Manage shifts</span>
-          <span class="label label-primary pull-right">4</span>
+          <span>Schedule shifts</span>
+        </a>
+      </li>
+      @endif
+
+      @if (Entrust::hasRole('manager'))
+      <li class="treeview">
+        <a href="manage-shifts">
+          <i class="fa fa-files-o"></i>
+          <span>Manager shifts</span>
         </a>
       </li>
       @endif

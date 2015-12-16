@@ -21,3 +21,6 @@ Route::get('auth/logout', 'LoginController@logout');
 Route::get('home',  ['middleware' => 'auth', 'uses' => 'LoginController@home']);
 
 Route::get('schedule',  ['middleware' => 'auth', 'uses' => 'PageController@schedule']);
+
+Entrust::routeNeedsRole('manage-shifts', array('manager'), Redirect::to('/home'));
+Route::get('manage-shifts',  ['middleware' => 'auth', 'uses' => 'PageController@manageShifts']);

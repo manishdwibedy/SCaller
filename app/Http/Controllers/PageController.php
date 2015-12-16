@@ -16,4 +16,8 @@ class PageController extends Controller
         return view('schedule' , ['page' => 'schedule']);
     }
 
+    public function manageShifts(){
+        return view('manage-schedule' , ['page' => 'manage-schedule']);
+    }
+
 }
