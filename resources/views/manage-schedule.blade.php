@@ -5,7 +5,10 @@
     @include('common.scripts')
 
     {!! HTML::style('css/bootstrap-switch.css') !!}
+    {!! HTML::style('css/build.css') !!}
+    {!! HTML::style('css/font-awesome.css') !!}
     {!! HTML::script('js/bootstrap-switch.js') !!}
+
 
     <script>
     $(function() {
@@ -25,7 +28,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Schedule your shifts
+            Manage Shifts
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -35,12 +38,66 @@
 
         <!-- Main content -->
         <section class="content">
-          Manage
-          @if (Auth::user()->type == 'manager')
-          asas
-          @endif
+          <div class="row">
+            <div class="col-md-3">
+              Sunday
+            </div>
+            <div class="col-md-3">
+              <div class="checkbox checkbox-primary">
+                  <input id="checkbox1" class="styled" type="checkbox">
+                  <label for="checkbox1">
+                      Shift 1
+                  </label>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="checkbox checkbox-primary">
+                  <input id="checkbox2" class="styled" type="checkbox">
+                  <label for="checkbox2">
+                      Shift 2
+                  </label>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="checkbox checkbox-primary">
+                  <input id="checkbox3" class="styled" type="checkbox">
+                  <label for="checkbox3">
+                      Shift 3
+                  </label>
+              </div>
+            </div>
+          </div>
 
- {{       Auth::user()->type }}
+
+          <div class="row">
+            <div class="col-md-3">
+              Sunday
+            </div>
+            <div class="col-md-3">
+              <div class="checkbox checkbox-primary">
+                  <input id="checkbox1" class="styled" type="checkbox">
+                  <label for="checkbox1">
+                      Shift 1
+                  </label>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="checkbox checkbox-primary">
+                  <input id="checkbox2" class="styled" type="checkbox">
+                  <label for="checkbox2">
+                      Shift 2
+                  </label>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="checkbox checkbox-primary">
+                  <input id="checkbox3" class="styled" type="checkbox">
+                  <label for="checkbox3">
+                      Shift 3
+                  </label>
+              </div>
+            </div>
+          </div>
 
 
         </section><!-- /.content -->
