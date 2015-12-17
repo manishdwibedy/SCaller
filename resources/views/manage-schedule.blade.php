@@ -38,66 +38,70 @@
 
         <!-- Main content -->
         <section class="content">
-          <div class="row">
-            <div class="col-md-3">
-              Sunday
-            </div>
-            <div class="col-md-3">
-              <div class="checkbox checkbox-primary">
-                  <input id="checkbox1" class="styled" type="checkbox">
-                  <label for="checkbox1">
-                      Shift 1
-                  </label>
+          <div class="container-fluid">
+
+            <div class="row row-eq-height">
+              <div class="col-md-3 valign">
+                Sunday
+              </div>
+              <div class="col-md-3">
+                <div class="checkbox checkbox-primary">
+                    <input id="checkbox1" class="styled" type="checkbox">
+                    <label for="checkbox1">
+                        Shift 1
+                    </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="checkbox checkbox-primary">
+                    <input id="checkbox2" class="styled" type="checkbox">
+                    <label for="checkbox2">
+                        Shift 2
+                    </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="checkbox checkbox-primary">
+                    <input id="checkbox3" class="styled" type="checkbox">
+                    <label for="checkbox3">
+                        Shift 3
+                    </label>
+                </div>
               </div>
             </div>
-            <div class="col-md-3">
-              <div class="checkbox checkbox-primary">
-                  <input id="checkbox2" class="styled" type="checkbox">
-                  <label for="checkbox2">
-                      Shift 2
-                  </label>
+
+
+            <div class="row row-eq-height">
+              <div class="col-md-3 valign">
+                Sunday
               </div>
-            </div>
-            <div class="col-md-3">
-              <div class="checkbox checkbox-primary">
-                  <input id="checkbox3" class="styled" type="checkbox">
-                  <label for="checkbox3">
-                      Shift 3
-                  </label>
+              <div class="col-md-3">
+                <div class="checkbox checkbox-primary">
+                    <input id="checkbox1" class="styled" type="checkbox">
+                    <label for="checkbox1">
+                        Shift 1
+                    </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="checkbox checkbox-primary">
+                    <input id="checkbox2" class="styled" type="checkbox">
+                    <label for="checkbox2">
+                        Shift 2
+                    </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="checkbox checkbox-primary">
+                    <input id="checkbox3" class="styled" type="checkbox">
+                    <label for="checkbox3">
+                        Shift 3
+                    </label>
+                </div>
               </div>
             </div>
           </div>
 
-
-          <div class="row">
-            <div class="col-md-3">
-              Sunday
-            </div>
-            <div class="col-md-3">
-              <div class="checkbox checkbox-primary">
-                  <input id="checkbox1" class="styled" type="checkbox">
-                  <label for="checkbox1">
-                      Shift 1
-                  </label>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="checkbox checkbox-primary">
-                  <input id="checkbox2" class="styled" type="checkbox">
-                  <label for="checkbox2">
-                      Shift 2
-                  </label>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="checkbox checkbox-primary">
-                  <input id="checkbox3" class="styled" type="checkbox">
-                  <label for="checkbox3">
-                      Shift 3
-                  </label>
-              </div>
-            </div>
-          </div>
 
 
         </section><!-- /.content -->
