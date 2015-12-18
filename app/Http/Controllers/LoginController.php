@@ -126,4 +126,11 @@ class LoginController extends Controller
         return view('home' , ['page' => 'home']);
     }
 
+    public function test(){
+        //$input = Request::all();
+        $name = Request::input('checkbox_0');
+
+        echo 'asd'.$name;
+    }
+
 }

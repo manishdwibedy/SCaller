@@ -40,6 +40,9 @@
         <section class="content">
           <div class="container-fluid">
 
+
+            {!! Form::open(array('url' => 'testingForm')) !!}
+
             @for ($i = 0; $i < 7; $i++)
             <div class="row">
               <div class="col-md-3 valign">
@@ -47,7 +50,7 @@
               </div>
               <div class="col-md-3">
                 <div class="checkbox checkbox-primary">
-                    <input id="checkbox_{{$i}}" class="styled" type="checkbox">
+                    <input id="checkbox_{{$i}}" name="checkbox_{{$i}}" class="styled" type="checkbox">
                     <label for="checkbox_{{$i}}">
                         Shift 1
                     </label>
@@ -71,6 +74,14 @@
               </div>
             </div>
             @endfor
+            {!! Form::submit('Contact Us!', array('class'=>'btn btn-primary')) !!}
+
+            {!! Form::close() !!}
+
+            {!! Form::open(array('url' => 'foo/bar')) !!}
+
+            {!! Form::close() !!}
+
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
