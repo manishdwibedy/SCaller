@@ -13,7 +13,6 @@ class CreateUserRole extends Seeder
     {
         DB::table('role_user')->truncate();
 
-
         // Making an admin user
         $user = App\User::where('name', '=', 'Manish Dwibedy')->first();
         $admin = App\Role::where('name', '=', 'admin')->first();

@@ -17,16 +17,3 @@
 <!-- AdminLTE Skins. Choose a skin from the css/skins
      folder instead of downloading all of them to reduce the load. -->
 {!! HTML::style('css/skins/_all-skins.min.css') !!}
-
-<style>
-.row-eq-height{
-  display: flex;
-}
-
-.valign{
-  vertical-align: middle;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-</style>

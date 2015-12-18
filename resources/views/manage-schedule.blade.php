@@ -40,70 +40,37 @@
         <section class="content">
           <div class="container-fluid">
 
-            <div class="row row-eq-height">
+            @for ($i = 0; $i < 7; $i++)
+            <div class="row">
               <div class="col-md-3 valign">
-                Sunday
+                <span class='day_{{$i}}'>Sunday</span>
               </div>
               <div class="col-md-3">
                 <div class="checkbox checkbox-primary">
-                    <input id="checkbox1" class="styled" type="checkbox">
-                    <label for="checkbox1">
+                    <input id="checkbox_{{$i}}" class="styled" type="checkbox">
+                    <label for="checkbox_{{$i}}">
                         Shift 1
                     </label>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="checkbox checkbox-primary">
-                    <input id="checkbox2" class="styled" type="checkbox">
-                    <label for="checkbox2">
+                    <input id="checkbox_{{$i}}" class="styled" type="checkbox">
+                    <label for="checkbox_{{$i}}">
                         Shift 2
                     </label>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="checkbox checkbox-primary">
-                    <input id="checkbox3" class="styled" type="checkbox">
-                    <label for="checkbox3">
+                    <input id="checkbox_{{$i}}" class="styled" type="checkbox">
+                    <label for="checkbox_{{$i}}">
                         Shift 3
                     </label>
                 </div>
               </div>
             </div>
-
-
-            <div class="row row-eq-height">
-              <div class="col-md-3 valign">
-                Sunday
-              </div>
-              <div class="col-md-3">
-                <div class="checkbox checkbox-primary">
-                    <input id="checkbox1" class="styled" type="checkbox">
-                    <label for="checkbox1">
-                        Shift 1
-                    </label>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="checkbox checkbox-primary">
-                    <input id="checkbox2" class="styled" type="checkbox">
-                    <label for="checkbox2">
-                        Shift 2
-                    </label>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="checkbox checkbox-primary">
-                    <input id="checkbox3" class="styled" type="checkbox">
-                    <label for="checkbox3">
-                        Shift 3
-                    </label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-
+            @endfor
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 

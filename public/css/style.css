@@ -534,3 +534,15 @@ input, button {
 .test{
   display: inherit;
 }
+
+
+
+/* */
+.row [class*="col-"]{
+  margin-bottom: -99999px;
+  padding-bottom: 99999px;
+}
+
+.row{
+  overflow: hidden;
+}
