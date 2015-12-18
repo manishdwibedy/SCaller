@@ -27,6 +27,8 @@ class LoadShiftDefination extends Seeder
 
         for ($index = 0; $index < 7; $index++) {
 
+          if($index == 5)
+            continue;
           $date->setDate(2016, 1, 2 + $index);
 
           DB::table('shift_defination')->insert([
