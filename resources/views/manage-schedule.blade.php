@@ -43,38 +43,25 @@
 
             {!! Form::open(array('url' => 'testingForm')) !!}
 
-            @for ($i = 0; $i < 7; $i++)
+            @for ($day = 0; $day < 7; $day++)
             <div class="row">
               <div class="col-md-3 valign">
-                <span class='day_{{$i}}'>Sunday</span>
+                <span class='day_{{$day}}'>Day {{$day+1}}</span>
               </div>
+
+              @for ($shift = 0; $shift < 3; $shift++)
               <div class="col-md-3">
                 <div class="checkbox checkbox-primary">
-                    <input id="checkbox_{{$i}}" name="checkbox_{{$i}}" class="styled" type="checkbox">
-                    <label for="checkbox_{{$i}}">
-                        Shift 1
+                    <input id="checkbox_{{$day}}_{{$shift}}" name="checkbox_{{$day}}_{{$shift}}" class="styled" type="checkbox">
+                    <label for="checkbox_{{$day}}_{{$shift}}">
+                        Shift {{$shift+1}}
                     </label>
                 </div>
               </div>
-              <div class="col-md-3">
-                <div class="checkbox checkbox-primary">
-                    <input id="checkbox_{{$i}}" class="styled" type="checkbox">
-                    <label for="checkbox_{{$i}}">
-                        Shift 2
-                    </label>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="checkbox checkbox-primary">
-                    <input id="checkbox_{{$i}}" class="styled" type="checkbox">
-                    <label for="checkbox_{{$i}}">
-                        Shift 3
-                    </label>
-                </div>
-              </div>
+              @endfor
             </div>
             @endfor
-            {!! Form::submit('Contact Us!', array('class'=>'btn btn-primary')) !!}
+            {!! Form::submit('Update Shift Info!', array('class'=>'btn btn-primary')) !!}
 
             {!! Form::close() !!}
 
