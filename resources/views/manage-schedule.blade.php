@@ -39,7 +39,15 @@
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
-
+            <?php
+            $showMessage = isset($saved) ? $saved : false
+            ?>
+            @if ($showMessage)
+              <div class="alert alert-success " role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                Shift Information has been updated successfully.
+              </div>
+            @endif
 
             {!! Form::open(array('url' => 'testingForm')) !!}
 

@@ -16,9 +16,10 @@ class DatabaseSeeder extends Seeder
 
         //$this->call(CreateUser::class);
         //$this->call(CreateRole::class);
-        $this->call(CreateUserRole::class);
+        //$this->call(CreateUserRole::class);
         //$this->call(CreatePermissions::class);
         //$this->call(CreateRolePermission::class);
+        $this->call(LoadShiftDefination::class);
         Model::reguard();
     }
 }

@@ -130,7 +130,10 @@ class LoginController extends Controller
         //$input = Request::all();
         $name = Request::input('checkbox_0');
 
-        echo 'asd'.$name;
+
+        //return view('manage-schedule')->with(array('saved', true));
+        return view('manage-schedule' , ['page' => 'home', 'saved' => true]);
+        //echo 'asd'.$name;
     }
 
 }
