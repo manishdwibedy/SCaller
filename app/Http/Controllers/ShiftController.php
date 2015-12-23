@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request;
 use Log;
+use Auth;
 
 class ShiftController extends Controller
 {
@@ -42,5 +43,43 @@ class ShiftController extends Controller
         $shifts = DB::table('shift_defination')->get();
 
         return view('manage-schedule' , ['page' => 'manage-schedule', 'shifts' => $shifts, 'saved' => true]);
+    }
+
+
+
+    // Get all shifts
+    public function scheduleShifts(){
+
+        // Get the current user
+        $user = Auth::user();
+        Log::info($user->id);
+
+        // Get all the selected shifts
+        $inputs = Request::all();
+        Log::info($inputs);
+
+        foreach ($inputs as $key=>$shift)
+        {
+          if($key=='_token')
+          {
+            continue;
+          }
+
+          $CallerShift = new \App\CallerShift;
+          $CallerShift->user_id = $user->id;
+          Log::info($key . '->' . $shift);
+          if($shift == 1)
+          {
+            $CallerShift->shift_id = 1;
+            $CallerShift->save();
+
+          }
+
+        }
+
+
+        $shifts = DB::table('shift_defination')->get();
+
+        return view('schedule' , ['page' => 'manage-schedule', 'shifts' => $shifts, 'saved' => true]);
     }
 }

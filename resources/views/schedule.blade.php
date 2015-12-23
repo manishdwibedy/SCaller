@@ -10,6 +10,19 @@
     <script>
     $(function() {
         $(".shift").bootstrapSwitch('state', false);
+
+        $(".shift").on('switchChange.bootstrapSwitch', function(event, state) {
+          var shiftID = this.id.substring(6); // DOM element
+          if(state){
+            //alert($('input[name=zyx]').val());
+            $('input[name=shift_' + shiftID + ']').val(1);
+            //$('[name="shift' + shiftID + ']').value(1);
+          }
+          else {
+            //$('[name="shift' + shiftID + ']').value(0);
+          }
+
+        });
     });
     </script>
   </head>
@@ -42,6 +55,9 @@
           ?>
           <div class="container-fluid">
             <div class="row">
+              {!! Form::open(array('url' => 'schedule')) !!}
+              {!! csrf_field() !!}
+
               @for ($day = 0; $day < 6; $day++)
                 <?php
                   $date = strtotime("+".$day." days", strtotime($nextSunday));
@@ -57,28 +73,33 @@
                   ?>
                         @if ($shifts[$counter] -> active === 1)
                         <div class="col-xs-6 col-md-2 text-center">
-                        {{ date('h:i A', strtotime($shifts[$counter++] -> shift_start)) }}
+                        {{ date('h:i A', strtotime($shifts[$counter] -> shift_start)) }}
                         -
                         {{ $endTime }}
                         </div>
-                        <div class="col-xs-6 col-md-2 text-center"><input type="checkbox" class="shift" checked></input></div>
+                        <div class="col-xs-6 col-md-2 text-center">
+                          <input type="checkbox" class="shift" id='shift_{{$shifts[$counter]->id}}'></input>
+                          <input type="hidden" name="shift_{{$shifts[$counter++]->id}}" value='0'>
+                        </div>
                       @else
                         <?php $counter++; ?>
                       @endif
 
-
-
-
-
-
                   @endfor
+
+
                 </div>
               @endfor
               <br>
+
+              {!! Form::submit('Save Shift Schedule!', array('class'=>'btn btn-primary')) !!}
+
+              {!! Form::close() !!}
+
             </div>
 
           </div>
-          
+
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->

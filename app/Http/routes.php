@@ -23,6 +23,9 @@ Route::get('home',  ['middleware' => 'auth', 'uses' => 'LoginController@home']);
 //Managing Scheduling
 Route::get('schedule',  ['middleware' => 'auth', 'uses' => 'PageController@schedule']);
 
+// Caller Scheduling Shifts
+Route::post('schedule',  ['middleware' => 'auth', 'uses' => 'ShiftController@scheduleShifts']);
+
 //Only manager can manage shifts, others get redirected to the home page.
 Entrust::routeNeedsRole('manage-shifts', array('manager'), Redirect::to('/home'));
 
