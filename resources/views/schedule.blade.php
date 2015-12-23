@@ -14,15 +14,14 @@
         @foreach($caller_shifts as $shift)
           $('input[id="shift_{{$shift->shift_id}}"]').bootstrapSwitch('state', true, true);
         @endforeach
+
         $(".shift").on('switchChange.bootstrapSwitch', function(event, state) {
           var shiftID = this.id.substring(6); // DOM element
           if(state){
-            //alert($('input[name=zyx]').val());
             $('input[name=shift_' + shiftID + ']').val(1);
-            //$('[name="shift' + shiftID + ']').value(1);
           }
           else {
-            //$('[name="shift' + shiftID + ']').value(0);
+            $('input[name=shift_' + shiftID + ']').val(0);
           }
 
 
