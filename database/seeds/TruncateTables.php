@@ -12,5 +12,6 @@ class TruncateTables extends Seeder
     public function run()
     {
         //
+        
     }
 }
