@@ -58,7 +58,7 @@
               </div>
             @endif
 
-            {!! Form::open(array('url' => 'changeShiftDefinations')) !!}
+            {!! Form::open(array('url' => 'manage-shifts')) !!}
 
             <?php
             $nextSunday = date('Y-m-d', strtotime('next sunday'));

@@ -28,4 +28,4 @@ Entrust::routeNeedsRole('manage-shifts', array('manager'), Redirect::to('/home')
 
 Route::get('manage-shifts',  ['middleware' => 'auth', 'uses' => 'PageController@manageShifts']);
 
-Route::post('changeShiftDefinations',  ['middleware' => 'auth', 'uses' => 'ShiftController@ModifyShifts']);
+Route::post('manage-shifts',  ['middleware' => 'auth', 'uses' => 'ShiftController@ModifyShifts']);
