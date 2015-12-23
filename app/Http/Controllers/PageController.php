@@ -14,7 +14,8 @@ class PageController extends Controller
      * Returns the user to the scheduling page
      */
     public function schedule(){
-        return view('schedule' , ['page' => 'schedule']);
+        $shifts = DB::table('shift_defination')->get();
+        return view('schedule' , ['page' => 'schedule', 'shifts' => $shifts]);
     }
 
     public function manageShifts(){

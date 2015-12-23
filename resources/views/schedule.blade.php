@@ -36,18 +36,36 @@
         <!-- Main content -->
         <section class="content">
 
+          <?php
+            $nextSunday = date('Y-m-d', strtotime('next sunday'));
+            $counter = 0;
+          ?>
           <div class="container-fluid">
             <div class="row">
-              <div class="col-md-12">Day Comes here</div>
-              <div class="row">
-                <div class="col-xs-6 col-md-3 text-center">Time 1</div>
-                <div class="col-xs-6 col-md-3 text-center"><input type="checkbox" class="shift" checked></input></div>
-                <div class="col-xs-6 col-md-3 text-center">Time 1</div>
-                <div class="col-xs-6 col-md-3 text-center"><input type="checkbox" class="shift" checked></input></div>
-                <div class="col-xs-6 col-md-3 text-center">Time 1</div>
-                <div class="col-xs-6 col-md-3 text-center"><input type="checkbox" class="shift" checked></input></div>
+              @for ($day = 0; $day < 6; $day++)
+              <?php
+                $date = strtotime("+".$day." days", strtotime($nextSunday));
+              ?>
 
+              <div class="col-md-12">{{date("l d F y", $date)}}</div>
+              <div class="row">
+                @for ($shift = 0; $shift < 3; $shift++)
+                <?php
+                $endTime = new DateTime($shifts[$counter]->shift_start); //current date/time
+                $endTime->add(new DateInterval("PT" . $shifts[$counter]->duration .  "H"));
+                $endTime = $endTime->format('h:i A');
+                 ?>
+
+
+                <div class="col-xs-6 col-md-3 text-center">
+                  {{ date('h:i A', strtotime($shifts[$counter++] -> shift_start)) }}
+                  -
+                  {{ $endTime }}
+                </div>
+                <div class="col-xs-6 col-md-3 text-center"><input type="checkbox" class="shift" checked></input></div>
+                @endfor
               </div>
+              @endfor
             </div>
 
           </div>
