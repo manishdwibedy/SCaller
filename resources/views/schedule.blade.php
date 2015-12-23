@@ -43,38 +43,42 @@
           <div class="container-fluid">
             <div class="row">
               @for ($day = 0; $day < 6; $day++)
-              <?php
-                $date = strtotime("+".$day." days", strtotime($nextSunday));
-              ?>
-
-              <div class="col-md-12">{{date("l d F y", $date)}}</div>
-              <div class="row">
-                @for ($shift = 0; $shift < 3; $shift++)
                 <?php
-                $endTime = new DateTime($shifts[$counter]->shift_start); //current date/time
-                $endTime->add(new DateInterval("PT" . $shifts[$counter]->duration .  "H"));
-                $endTime = $endTime->format('h:i A');
-                 ?>
+                  $date = strtotime("+".$day." days", strtotime($nextSunday));
+                ?>
+
+                <div class="col-md-12">{{date("l d F y", $date)}}</div>
+                <div class="row">
+                  @for ($shift = 0; $shift < 3; $shift++)
+                  <?php
+                    $endTime = new DateTime($shifts[$counter]->shift_start); //current date/time
+                    $endTime->add(new DateInterval("PT" . $shifts[$counter]->duration .  "H"));
+                    $endTime = $endTime->format('h:i A');
+                  ?>
+                        @if ($shifts[$counter] -> active === 1)
+                        <div class="col-xs-6 col-md-2 text-center">
+                        {{ date('h:i A', strtotime($shifts[$counter++] -> shift_start)) }}
+                        -
+                        {{ $endTime }}
+                        </div>
+                        <div class="col-xs-6 col-md-2 text-center"><input type="checkbox" class="shift" checked></input></div>
+                      @else
+                        <?php $counter++; ?>
+                      @endif
 
 
-                <div class="col-xs-6 col-md-3 text-center">
-                  {{ date('h:i A', strtotime($shifts[$counter++] -> shift_start)) }}
-                  -
-                  {{ $endTime }}
+
+
+
+
+                  @endfor
                 </div>
-                <div class="col-xs-6 col-md-3 text-center"><input type="checkbox" class="shift" checked></input></div>
-                @endfor
-              </div>
               @endfor
+              <br>
             </div>
 
           </div>
-          @if (Auth::user()->type == 'manager')
-          asas
-          @endif
-
- {{       Auth::user()->type }}
-
+          
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
