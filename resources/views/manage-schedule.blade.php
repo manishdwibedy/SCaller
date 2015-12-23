@@ -69,6 +69,15 @@
               @endfor
             </div>
             @endfor
+
+
+            <div class="checkbox checkbox-primary">
+                <input id="checkbox_toggle" name="checkbox_toggle" class="styled" type="checkbox">
+                <label for="checkbox_toggle">
+                    Toggle shifts availablity
+                </label>
+            </div>
+
             {!! Form::submit('Update Shift Info!', array('class'=>'btn btn-primary')) !!}
 
             {!! Form::close() !!}

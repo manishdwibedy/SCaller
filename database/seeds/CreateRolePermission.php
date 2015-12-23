@@ -12,8 +12,9 @@ class CreateRolePermission extends Seeder
     public function run()
     {
         //
-
-        DB::table('role_user')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('permission_role')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         // Making an manager role
         $role = App\Role::where('name', '=', 'manager')->first();

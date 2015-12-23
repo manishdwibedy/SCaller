@@ -12,7 +12,9 @@ class LoadShiftDefination extends Seeder
     public function run()
     {
         //
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('shift_defination')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $days = array(
             'Mon',

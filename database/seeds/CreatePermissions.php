@@ -12,8 +12,9 @@ class CreatePermissions extends Seeder
     public function run()
     {
         // truncating the permissions table
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('permissions')->truncate();
-
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $scheduleShifts = new App\Permission();
         $scheduleShifts->name         = 'schedule-shifts';

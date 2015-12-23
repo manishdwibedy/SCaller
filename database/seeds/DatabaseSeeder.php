@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-
         
+
         $this->call(CreateUser::class);
         $this->call(CreateRole::class);
         $this->call(CreateUserRole::class);
