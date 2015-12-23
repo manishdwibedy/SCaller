@@ -11,6 +11,9 @@
     $(function() {
         $(".shift").bootstrapSwitch('state', false);
 
+        @foreach($caller_shifts as $shift)
+          $('input[id="shift_{{$shift->shift_id}}"]').bootstrapSwitch('state', true, true);
+        @endforeach
         $(".shift").on('switchChange.bootstrapSwitch', function(event, state) {
           var shiftID = this.id.substring(6); // DOM element
           if(state){
@@ -21,6 +24,8 @@
           else {
             //$('[name="shift' + shiftID + ']').value(0);
           }
+
+
 
         });
     });
@@ -95,6 +100,7 @@
               {!! Form::submit('Save Shift Schedule!', array('class'=>'btn btn-primary')) !!}
 
               {!! Form::close() !!}
+
 
             </div>
 
