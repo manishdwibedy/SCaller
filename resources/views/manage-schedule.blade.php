@@ -81,7 +81,15 @@
                     <input id="checkbox_{{$day}}_{{$shift}}" name="checkbox_{{$day}}_{{$shift}}" class="styled" type="checkbox">
                     <label for="checkbox_{{$day}}_{{$shift}}">
                         <!--Shift {{$shift+1}} -->
+
+                        <?php
+                        $endTime = new DateTime($shifts[$counter]->shift_start); //current date/time
+                        $endTime->add(new DateInterval("PT" . $shifts[$counter]->duration .  "H"));
+                        $endTime = $endTime->format('h:i A');
+                         ?>
                         {{ date('h:i A', strtotime($shifts[$counter++] -> shift_start)) }}
+                        -
+                        {{ $endTime }}
                     </label>
                 </div>
               </div>
@@ -101,12 +109,6 @@
 
             {!! Form::close() !!}
 
-            {!! Form::open(array('url' => 'foo/bar')) !!}
-
-            {!! Form::close() !!}
-            @foreach ($shifts as $item)
-              {{ $item->shift_start }}
-            @endforeach
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
