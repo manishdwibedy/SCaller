@@ -47,7 +47,7 @@ class LoadShiftDefination extends Seeder
 
           DB::table('shift_defination')->insert([
               'name' => $days[$index] . '_7PM',
-              'shift_start' => $date->setTime(21,0),
+              'shift_start' => $date->setTime(19,0),
               'duration' => 2
           ]);
         }
