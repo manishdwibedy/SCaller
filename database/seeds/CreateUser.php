@@ -12,7 +12,7 @@ class CreateUser extends Seeder
     public function run()
     {
         //truncate the users table
-        //DB::table('users')->truncate();
+        DB::table('users')->truncate();
 
 
         //create admin user

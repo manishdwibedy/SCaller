@@ -12,7 +12,7 @@ class CreateRole extends Seeder
     public function run()
     {
         // truncating the roles table
-        //DB::table('roles')->truncate();
+        DB::table('roles')->truncate();
 
 
         //create admin user

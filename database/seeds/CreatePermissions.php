@@ -11,7 +11,10 @@ class CreatePermissions extends Seeder
      */
     public function run()
     {
-        //
+        // truncating the permissions table
+        DB::table('permissions')->truncate();
+
+
         $scheduleShifts = new App\Permission();
         $scheduleShifts->name         = 'schedule-shifts';
         $scheduleShifts->display_name = 'Schedule Shifts'; // optional

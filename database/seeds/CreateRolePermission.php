@@ -12,6 +12,7 @@ class CreateRolePermission extends Seeder
     public function run()
     {
         //
+
         DB::table('role_user')->truncate();
 
         // Making an manager role
