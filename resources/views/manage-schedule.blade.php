@@ -13,6 +13,14 @@
     <script>
     $(function() {
         $(".shift").bootstrapSwitch('state', false);
+
+        $("#checkbox_toggle").click(function() {
+          var checkBoxes = $(".styled");
+          $.each(checkBoxes, function( index, value ) {
+            value.checked = !value.checked;
+          });
+
+        });
     });
     </script>
   </head>
