@@ -59,10 +59,19 @@
 
             {!! Form::open(array('url' => 'testingForm')) !!}
 
+            <?php
+            $nextSunday = date('Y-m-d', strtotime('next sunday'));
+            ?>
+
             @for ($day = 0; $day < 7; $day++)
             <div class="row">
               <div class="col-md-3 valign">
-                <span class='day_{{$day}}'>Day {{$day+1}}</span>
+                <?php
+                  $date = strtotime("+".$day." days", strtotime($nextSunday));
+                ?>
+
+                <span class='day_{{$day}}'>{{date("D d F y", $date)}}</span>
+
               </div>
 
               @for ($shift = 0; $shift < 3; $shift++)
