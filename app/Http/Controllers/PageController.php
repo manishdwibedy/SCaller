@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -17,7 +18,9 @@ class PageController extends Controller
     }
 
     public function manageShifts(){
-        return view('manage-schedule' , ['page' => 'manage-schedule']);
+        $shifts = DB::table('shift_defination')->get();
+
+        return view('manage-schedule' , ['page' => 'manage-schedule', 'shifts' => $shifts]);
     }
 
 }

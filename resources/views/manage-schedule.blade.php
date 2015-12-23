@@ -48,7 +48,8 @@
         <section class="content">
           <div class="container-fluid">
             <?php
-            $showMessage = isset($saved) ? $saved : false
+              $showMessage = isset($saved) ? $saved : false;
+              $counter = 0;
             ?>
             @if ($showMessage)
               <div class="alert alert-success " role="alert">
@@ -63,14 +64,14 @@
             $nextSunday = date('Y-m-d', strtotime('next sunday'));
             ?>
 
-            @for ($day = 0; $day < 7; $day++)
+            @for ($day = 0; $day < 6; $day++)
             <div class="row">
               <div class="col-md-3 valign">
                 <?php
                   $date = strtotime("+".$day." days", strtotime($nextSunday));
                 ?>
 
-                <span class='day_{{$day}}'>{{date("D d F y", $date)}}</span>
+                <span class='day_{{$day}}'>{{date("l d F y", $date)}}</span>
 
               </div>
 
@@ -79,7 +80,8 @@
                 <div class="checkbox checkbox-primary">
                     <input id="checkbox_{{$day}}_{{$shift}}" name="checkbox_{{$day}}_{{$shift}}" class="styled" type="checkbox">
                     <label for="checkbox_{{$day}}_{{$shift}}">
-                        Shift {{$shift+1}}
+                        <!--Shift {{$shift+1}} -->
+                        {{ date('h:i A', strtotime($shifts[$counter++] -> shift_start)) }}
                     </label>
                 </div>
               </div>
@@ -102,7 +104,9 @@
             {!! Form::open(array('url' => 'foo/bar')) !!}
 
             {!! Form::close() !!}
-
+            @foreach ($shifts as $item)
+              {{ $item->shift_start }}
+            @endforeach
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
