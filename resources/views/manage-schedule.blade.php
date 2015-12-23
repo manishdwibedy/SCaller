@@ -58,7 +58,7 @@
               </div>
             @endif
 
-            {!! Form::open(array('url' => 'testingForm')) !!}
+            {!! Form::open(array('url' => 'changeShiftDefinations')) !!}
 
             <?php
             $nextSunday = date('Y-m-d', strtotime('next sunday'));
@@ -78,7 +78,7 @@
               @for ($shift = 0; $shift < 3; $shift++)
               <div class="col-md-3">
                 <div class="checkbox checkbox-primary">
-                    <input id="checkbox_{{$day}}_{{$shift}}" name="checkbox_{{$day}}_{{$shift}}" class="styled" type="checkbox">
+                    <input id="checkbox_{{$day}}_{{$shift}}" name="checkbox_{{$day}}_{{$shift}}" class="styled" type="checkbox" {{ $shifts[$counter] -> active ? "checked" : ""}}>
                     <label for="checkbox_{{$day}}_{{$shift}}">
                         <!--Shift {{$shift+1}} -->
 
@@ -87,6 +87,7 @@
                         $endTime->add(new DateInterval("PT" . $shifts[$counter]->duration .  "H"));
                         $endTime = $endTime->format('h:i A');
                          ?>
+
                         {{ date('h:i A', strtotime($shifts[$counter++] -> shift_start)) }}
                         -
                         {{ $endTime }}

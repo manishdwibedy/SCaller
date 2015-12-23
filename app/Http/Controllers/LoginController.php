@@ -129,8 +129,6 @@ class LoginController extends Controller
     public function test(){
         //$input = Request::all();
         $name = Request::input('checkbox_0');
-
-
         //return view('manage-schedule')->with(array('saved', true));
         return view('manage-schedule' , ['page' => 'home', 'saved' => true]);
         //echo 'asd'.$name;

@@ -23,7 +23,9 @@ Route::get('home',  ['middleware' => 'auth', 'uses' => 'LoginController@home']);
 //Managing Scheduling
 Route::get('schedule',  ['middleware' => 'auth', 'uses' => 'PageController@schedule']);
 
+//Only manager can manage shifts, others get redirected to the home page.
 Entrust::routeNeedsRole('manage-shifts', array('manager'), Redirect::to('/home'));
+
 Route::get('manage-shifts',  ['middleware' => 'auth', 'uses' => 'PageController@manageShifts']);
 
-Route::post('testingForm',  ['middleware' => 'auth', 'uses' => 'LoginController@test']);
+Route::post('changeShiftDefinations',  ['middleware' => 'auth', 'uses' => 'ShiftController@ModifyShifts']);
