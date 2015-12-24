@@ -30,5 +30,6 @@ Route::post('schedule',  ['middleware' => 'auth', 'uses' => 'ShiftController@sch
 Entrust::routeNeedsRole('manage-shifts', array('manager'), Redirect::to('/home'));
 
 Route::get('manage-shifts',  ['middleware' => 'auth', 'uses' => 'PageController@manageShifts']);
-
 Route::post('manage-shifts',  ['middleware' => 'auth', 'uses' => 'ShiftController@ModifyShifts']);
+
+Route::get('caller-shifts',  ['middleware' => 'auth', 'uses' => 'PageController@viewCallerShifts']);

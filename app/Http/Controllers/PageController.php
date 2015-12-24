@@ -34,4 +34,13 @@ class PageController extends Controller
         return view('manage-schedule' , ['page' => 'manage-schedule', 'shifts' => $shifts]);
     }
 
+    public function viewCallerShifts(){
+      // $users = DB::table('users')
+      //             ->join('contacts', 'users.id', '=', 'contacts.user_id')
+      //             ->join('orders', 'users.id', '=', 'orders.user_id')
+      //             ->select('users.*', 'contacts.phone', 'orders.price')
+      //             ->get();
+        return view('callerShifts' , ['page' => 'caller-shifts']);
+    }
+
 }

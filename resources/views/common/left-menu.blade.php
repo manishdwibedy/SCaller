@@ -33,7 +33,7 @@
       </li>
 
       @if (Entrust::hasRole('caller'))
-      <li class="treeview">
+      <li class="{{ $page === 'schedule' ? 'active' : ''}} treeview">
         <a href="schedule">
           <i class="fa fa-files-o"></i>
           <span>Schedule shifts</span>
@@ -42,10 +42,17 @@
       @endif
 
       @if (Entrust::hasRole('manager'))
-      <li class="treeview">
+      <li class="{{ $page === 'manage-schedule' ? 'active' : ''}} treeview">
         <a href="manage-shifts">
           <i class="fa fa-files-o"></i>
-          <span>Manager shifts</span>
+          <span>Manage shifts</span>
+        </a>
+      </li>
+
+      <li class="{{ $page === 'caller-shifts' ? 'active' : ''}} treeview">
+        <a href="caller-shifts">
+          <i class="fa fa-files-o"></i>
+          <span>View Caller Shifts</span>
         </a>
       </li>
       @endif
