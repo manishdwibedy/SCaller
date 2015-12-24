@@ -26,15 +26,20 @@ Route::get('schedule',  ['middleware' => 'auth', 'uses' => 'PageController@sched
 // Caller Scheduling Shifts
 Route::post('schedule',  ['middleware' => 'auth', 'uses' => 'ShiftController@scheduleShifts']);
 
-//Only manager can manage shifts, others get redirected to the home page.
+// Only manager can manage shifts, others get redirected to the home page.
 Entrust::routeNeedsRole('manage-shifts', array('manager'), Redirect::to('/home'));
 
+// Managing the shift data
 Route::get('manage-shifts',  ['middleware' => 'auth', 'uses' => 'PageController@manageShifts']);
 Route::post('manage-shifts',  ['middleware' => 'auth', 'uses' => 'ShiftController@ModifyShifts']);
 
+// View caller details
 Route::get('caller-shifts',  ['middleware' => 'auth', 'uses' => 'PageController@viewCallerShifts']);
-
 Route::get('caller-shift-details', 'ShiftController@getCallerShiftDetails');
 
+// Exporting shift data
 Route::get('export-xls', 'ShiftController@exportToExcel');
 Route::get('export-pdf', 'ShiftController@exportToPDF');
+
+Route::get('create-users', 'PageController@createUsers');
+Route::post('create-users', 'CreateUsers@createUsers');

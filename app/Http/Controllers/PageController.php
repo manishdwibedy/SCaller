@@ -94,5 +94,8 @@ class PageController extends Controller
         return view('callerShifts' , ['page' => 'caller-shifts', 'callerData' => $callerData]);
     }
 
-
+    public function createUsers()
+    {
+        return view('create-users', ['page' => 'create-users']);
+    }
 }

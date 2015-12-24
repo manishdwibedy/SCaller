@@ -55,6 +55,13 @@
           <span>View Caller Shifts</span>
         </a>
       </li>
+
+      <li class="{{ $page === 'create-users' ? 'active' : ''}} treeview">
+        <a href="create-users">
+          <i class="fa fa-files-o"></i>
+          <span>Create Users</span>
+        </a>
+      </li>
       @endif
 
       <li>
