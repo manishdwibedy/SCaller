@@ -7,6 +7,22 @@
     {!! HTML::style('css/bootstrap-switch.css') !!}
     {!! HTML::script('js/bootstrap-switch.js') !!}
 
+    <style>
+    .dataShift{
+      margin: 20px 0px;
+      font-size: 20px;
+    }
+
+    .timeLabel{
+      margin-top: 5px;
+      font-size: 15px;
+      padding-left: 10px;
+    }
+
+    .btn{
+      margin-left: 15px;
+    }
+    </style>
     <script>
     $(function() {
         $(".shift").bootstrapSwitch('state', false);
@@ -67,7 +83,7 @@
                   $date = strtotime("+".$day." days", strtotime($nextSunday));
                 ?>
 
-                <div class="col-md-12">{{date("l d F y", $date)}}</div>
+                <div class="col-md-12 dataShift">{{date("l d F y", $date)}}</div>
                 <div class="row">
                   @for ($shift = 0; $shift < 3; $shift++)
                   <?php
@@ -77,9 +93,11 @@
                   ?>
                         @if ($shifts[$counter] -> active === 1)
                         <div class="col-xs-6 col-md-2 text-center">
-                        {{ date('h:i A', strtotime($shifts[$counter] -> shift_start)) }}
-                        -
-                        {{ $endTime }}
+                          <div class='timeLabel'>
+                            {{ date('h:i A', strtotime($shifts[$counter] -> shift_start)) }}
+                            -
+                            {{ $endTime }}
+                          </div>
                         </div>
                         <div class="col-xs-6 col-md-2 text-center">
                           <input type="checkbox" class="shift" id='shift_{{$shifts[$counter]->id}}'></input>
