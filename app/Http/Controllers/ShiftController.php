@@ -227,7 +227,7 @@ class ShiftController extends Controller
 
           $callerShifts = array($callerShifts);
 
-          unset($callerData[$caller->name]);
+          unset($callerData[date("d F Y", strtotime($shift->shift_start))]);
 
           $callerData[date("d F Y", strtotime($shift->shift_start))] = $caller;
 
@@ -256,9 +256,37 @@ class ShiftController extends Controller
         }
       }
 
+      $dayWiseData = array();
+      foreach($callerData as $day=>$shifts)
+      {
+        $shifts = $shifts->shifts;
+
+        $dayShiftData = array();
+
+        //Loop through the day's shifts
+        foreach($shifts as $shift)
+        {
+          $shiftDetail = new \stdClass();
+          $shiftDetail->start = $shift->start;
+          $shiftDetail->duration = $shift->duration;
+          $shiftDetail->caller = $shift->callerName;
+          if(array_key_exists($shift->start, $dayShiftData))
+          {
+            $shiftPresent = $dayShiftData[$shift->start];
+
+            array_push($shiftPresent, $shiftDetail);
+            $dayShiftData[$shift->start] = $shiftPresent;
+          }
+          else
+          {
+            $dayShiftData[$shift->start] = array($shiftDetail);
+          }
+        }
+        $dayWiseData[$day] = $dayShiftData;
+      }
 
       $excelData = array();
-      return Response::json($callerData);
+      return Response::json($dayWiseData);
       // $users = \App\User::select('id', 'name', 'email', 'created_at')->get();
       // \Excel::create('users', function($excel) use($callerData) {
       //     $excel->sheet('Sheet 1', function($sheet) use($callerData) {
