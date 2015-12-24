@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request;
 use Log;
 use Auth;
+use Response;
 
 class ShiftController extends Controller
 {
@@ -119,5 +120,77 @@ class ShiftController extends Controller
         $shifts = DB::table('shift_defination')->get();
 
         return view('schedule' , ['page' => 'manage-schedule', 'shifts' => $shifts, 'saved' => true, 'caller_shifts' => $caller_shifts]);
+    }
+
+    public function getCallerShiftDetails(){
+
+        $userID = $_GET['userID'];
+        $weekNumber = $_GET['weekNumber'];
+
+        $shiftSelected = DB::table('users')
+                  ->join('caller_shifts', 'users.id', '=', 'caller_shifts.user_id')
+                  ->join('shift_defination', 'shift_defination.id', '=', 'caller_shifts.shift_id')
+                  ->select('users.id','users.name', 'shift_defination.shift_start', 'shift_defination.duration')
+                  ->where('shift_defination.active', 1)
+                  ->where('users.id',$userID)
+                  ->where('caller_shifts.weekNumber', $weekNumber)
+                  ->get();
+        Log::info('user id '. Auth::user()->id);
+        Log::info('count '. count($shiftSelected) );
+
+        $callerData = array();
+        foreach($shiftSelected as $shift)
+        {
+          if(array_key_exists($shift->name, $callerData))
+          {
+            $caller = $callerData[$shift->name];
+            $caller->shiftCount = $caller->shiftCount + 1;
+
+            $callerShifts = $caller->shifts;
+
+            $callerShift = new \stdClass();
+            $callerShift->start = date("l d F Y h:i A", strtotime($shift->shift_start));
+            $callerShift->duration = $shift->duration;
+
+            array_push($callerShifts, $callerShift);
+
+            $caller->shifts = $callerShifts;
+
+            $callerShifts = array($callerShift);
+
+            unset($callerData[$caller->name]);
+
+            $callerData[$caller->name] = $caller;
+
+          }
+          else {
+            // Creating a new entry
+            $caller = new \stdClass();
+            $caller->id = $shift->id;
+            $caller->name = $shift->name;
+            $caller->shiftCount = 1;
+
+            $date = new \DateTime();
+
+            $caller->weekNumber = $date->format("W");
+
+            //Inserting the shift data of the current user
+            $callerShift = new \stdClass();
+
+
+
+            $callerShift->start = date("l d F Y h:i A", strtotime($shift->shift_start));
+            $callerShift->duration = $shift->duration;
+
+            $callerShifts = array($callerShift);
+            $caller->shifts = $callerShifts;
+
+            //Finally insert the data
+            $callerData[$caller->name] = $caller;
+
+          }
+        }
+        return Response::json($callerData);
+        //return view('callerShifts' , ['page' => 'caller-shifts', 'callerData' => $callerData]);
     }
 }

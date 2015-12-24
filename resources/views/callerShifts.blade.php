@@ -9,7 +9,37 @@
 
 
     <script>
+    function test(userID, weekNumber)
+    {
+      $.ajax({
+          url: 'caller-shift-details',
+          type: 'GET',
+          data: { userID: userID, weekNumber: weekNumber },
+          success: function(response)
+          {
 
+              var data = response;
+              $('#callerName').text(data.caller.name)
+
+              var htmlResponse = '<table class="table table-striped table-hover">';
+              htmlResponse += '<thead><tr><th>#</th><th>Shift Taken</th></tr></thead><tbody>';
+
+              var counter = 1;
+              $.each( data.caller.shifts, function( index, value ){
+                  htmlResponse += '<tr><td>' + counter + '</td><td>' + value.start + '</td></tr>';
+                  counter++;
+              });
+              htmlResponse += '</tbody></table>'
+              $('#shiftDetailModalBody').html(htmlResponse);
+              $('#shiftDetails').modal('show');
+              //alert(response);
+          },
+          error: function(error)
+          {
+            alert(error);
+          }
+      });
+    }
     </script>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
@@ -68,7 +98,9 @@
                   {{$callerDetail -> shiftCount}}
                 </td>
                 <td>
-                  Some {{ $callerDetail -> id }} - {{ $callerDetail -> weekNumber}}
+                  <button type="button" class="btn btn-default" aria-label="Left Align" onclick="test({{$callerDetail -> id}},{{$callerDetail -> weekNumber}})">
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                  </button>
                 </td>
               </tr>
               @endforeach
@@ -78,6 +110,24 @@
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
+
+
+      <div id='shiftDetails' class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Shift Details : <span id='callerName'></span></h4>
+            </div>
+            <div class="modal-body" id='shiftDetailModalBody'>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
 
       <!-- Footer -->
       @include('common.footer')
