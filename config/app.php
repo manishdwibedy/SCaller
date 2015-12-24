@@ -147,7 +147,9 @@ return [
 
         Illuminate\Html\HtmlServiceProvider::class,
 
-        Zizaco\Entrust\EntrustServiceProvider::class
+        Zizaco\Entrust\EntrustServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class
+
 
     ],
 
@@ -202,6 +204,7 @@ return [
         'HTML'=> 'Illuminate\Html\HtmlFacade',
 
         'Entrust' => 'Zizaco\Entrust\EntrustFacade',
+        'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 
 
 

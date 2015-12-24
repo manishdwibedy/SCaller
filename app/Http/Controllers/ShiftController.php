@@ -193,4 +193,86 @@ class ShiftController extends Controller
         return Response::json($callerData);
         //return view('callerShifts' , ['page' => 'caller-shifts', 'callerData' => $callerData]);
     }
+
+    public function exportShiftDetails(){
+
+
+      $shiftSelected = DB::table('users')
+                ->join('caller_shifts', 'users.id', '=', 'caller_shifts.user_id')
+                ->join('shift_defination', 'shift_defination.id', '=', 'caller_shifts.shift_id')
+                ->select('users.id','users.name', 'shift_defination.shift_start', 'shift_defination.duration')
+                ->where('shift_defination.active', 1)
+                ->get();
+      Log::info('user id '. Auth::user()->id);
+      Log::info('count '. count($shiftSelected) );
+
+      $callerData = array();
+      foreach($shiftSelected as $shift)
+      {
+        if(array_key_exists($shift->name, $callerData))
+        {
+          $caller = $callerData[$shift->name];
+          $caller->shiftCount = $caller->shiftCount + 1;
+
+          $callerShifts = $caller->shifts;
+
+          $callerShift = new \stdClass();
+          $callerShift->start = date("l d F Y h:i A", strtotime($shift->shift_start));
+          $callerShift->duration = $shift->duration;
+
+          array_push($callerShifts, $callerShift);
+
+          $caller->shifts = $callerShifts;
+
+          $callerShifts = array($callerShift);
+
+          unset($callerData[$caller->name]);
+
+          $callerData[$caller->name] = $caller;
+
+        }
+        else {
+          // Creating a new entry
+          $caller = new \stdClass();
+          $caller->id = $shift->id;
+          $caller->name = $shift->name;
+          $caller->shiftCount = 1;
+
+          $date = new \DateTime();
+
+          $caller->weekNumber = $date->format("W");
+
+          //Inserting the shift data of the current user
+          $callerShift = new \stdClass();
+
+
+
+          $callerShift->start = date("l d F Y h:i A", strtotime($shift->shift_start));
+          $callerShift->duration = $shift->duration;
+
+          $callerShifts = array($callerShift);
+          $caller->shifts = $callerShifts;
+
+          //Finally insert the data
+          $callerData[$caller->name] = $caller;
+
+        }
+      }
+
+      $excelData = array();
+      for()
+
+      $users = \App\User::select('id', 'name', 'email', 'created_at')->get();
+      \Excel::create('users', function($excel) use($callerData) {
+          $excel->sheet('Sheet 1', function($sheet) use($callerData) {
+              $sheet->fromArray($callerData);
+          });
+      })->export('xls');
+
+      // \Excel::create('Document', function($excel) use($callerData) {
+      //     $excel->sheet('Sheet', function($sheet) use($callerData){
+      //         $sheet->fromArray($callerData);
+      //     });
+      // })->download('xls');
+    }
 }

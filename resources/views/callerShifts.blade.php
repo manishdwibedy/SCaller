@@ -107,7 +107,7 @@
 
             </table>
 
-
+            <a href='export'>Export to Excel</a>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 

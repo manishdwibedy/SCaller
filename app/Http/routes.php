@@ -35,3 +35,5 @@ Route::post('manage-shifts',  ['middleware' => 'auth', 'uses' => 'ShiftControlle
 Route::get('caller-shifts',  ['middleware' => 'auth', 'uses' => 'PageController@viewCallerShifts']);
 
 Route::get('caller-shift-details', 'ShiftController@getCallerShiftDetails');
+
+Route::get('export-shift-details', 'ShiftController@exportShiftDetails');
