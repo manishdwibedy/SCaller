@@ -194,114 +194,118 @@ class ShiftController extends Controller
         //return view('callerShifts' , ['page' => 'caller-shifts', 'callerData' => $callerData]);
     }
 
-    public function exportShiftDetails(){
+    private function getData()
+    {
+        $shiftSelected = DB::table('users')
+                  ->join('caller_shifts', 'users.id', '=', 'caller_shifts.user_id')
+                  ->join('shift_defination', 'shift_defination.id', '=', 'caller_shifts.shift_id')
+                  ->select('users.id','users.name', 'shift_defination.shift_start', 'shift_defination.duration')
+                  ->where('shift_defination.active', 1)
+                  ->get();
+        Log::info('user id '. Auth::user()->id);
+        Log::info('count '. count($shiftSelected) );
 
-
-      $shiftSelected = DB::table('users')
-                ->join('caller_shifts', 'users.id', '=', 'caller_shifts.user_id')
-                ->join('shift_defination', 'shift_defination.id', '=', 'caller_shifts.shift_id')
-                ->select('users.id','users.name', 'shift_defination.shift_start', 'shift_defination.duration')
-                ->where('shift_defination.active', 1)
-                ->get();
-      Log::info('user id '. Auth::user()->id);
-      Log::info('count '. count($shiftSelected) );
-
-      $callerData = array();
-      foreach($shiftSelected as $shift)
-      {
-        if(array_key_exists(date("d F Y", strtotime($shift->shift_start)), $callerData))
+        $callerData = array();
+        foreach($shiftSelected as $shift)
         {
-          $caller = $callerData[date("d F Y", strtotime($shift->shift_start))];
-          $caller->shiftCount = $caller->shiftCount + 1;
+          if(array_key_exists(date("d F Y", strtotime($shift->shift_start)), $callerData))
+          {
+            $caller = $callerData[date("d F Y", strtotime($shift->shift_start))];
+            $caller->shiftCount = $caller->shiftCount + 1;
 
-          $callerShifts = $caller->shifts;
+            $callerShifts = $caller->shifts;
 
-          $callerDetail = new \stdClass();
-          $callerDetail->start = date("h:i A", strtotime($shift->shift_start));
-          $callerDetail->duration = $shift->duration;
-          $callerDetail->callerName = $shift->name;
+            $callerDetail = new \stdClass();
+            $callerDetail->start = date("h:i A", strtotime($shift->shift_start));
+            $callerDetail->duration = $shift->duration;
+            $callerDetail->callerName = $shift->name;
 
-          array_push($callerShifts, $callerDetail);
+            array_push($callerShifts, $callerDetail);
 
-          $caller->shifts = $callerShifts;
+            $caller->shifts = $callerShifts;
 
-          $callerShifts = array($callerShifts);
+            $callerShifts = array($callerShifts);
 
-          unset($callerData[date("d F Y", strtotime($shift->shift_start))]);
+            unset($callerData[date("d F Y", strtotime($shift->shift_start))]);
 
-          $callerData[date("d F Y", strtotime($shift->shift_start))] = $caller;
+            $callerData[date("d F Y", strtotime($shift->shift_start))] = $caller;
 
+          }
+          else {
+            // Creating a new entry
+            $caller = new \stdClass();
+            $caller->id = $shift->id;
+            $caller->shiftCount = 1;
+
+            $date = new \DateTime();
+
+            $caller->weekNumber = $date->format("W");
+
+            //Inserting the shift data of the current user
+            $callerDetail = new \stdClass();
+            $callerDetail->start = date("h:i A", strtotime($shift->shift_start));
+            $callerDetail->duration = $shift->duration;
+            $callerDetail->callerName = $shift->name;
+
+            $callerShifts = array($callerDetail);
+            $caller->shifts = $callerShifts;
+
+            //Finally insert the data
+            $callerData[date("d F Y", strtotime($shift->shift_start))] = $caller;
+          }
         }
-        else {
-          // Creating a new entry
-          $caller = new \stdClass();
-          $caller->id = $shift->id;
-          $caller->shiftCount = 1;
 
-          $date = new \DateTime();
-
-          $caller->weekNumber = $date->format("W");
-
-          //Inserting the shift data of the current user
-          $callerDetail = new \stdClass();
-          $callerDetail->start = date("h:i A", strtotime($shift->shift_start));
-          $callerDetail->duration = $shift->duration;
-          $callerDetail->callerName = $shift->name;
-
-          $callerShifts = array($callerDetail);
-          $caller->shifts = $callerShifts;
-
-          //Finally insert the data
-          $callerData[date("d F Y", strtotime($shift->shift_start))] = $caller;
-        }
-      }
-
-      $dayWiseData = array();
-      foreach($callerData as $day=>$shifts)
-      {
-        $shifts = $shifts->shifts;
-
-        $dayShiftData = array();
-
-        //Loop through the day's shifts
-        foreach($shifts as $shift)
+        $dayWiseData = array();
+        foreach($callerData as $day=>$shifts)
         {
-          $shiftDetail = new \stdClass();
-          $shiftDetail->start = $shift->start;
-          $shiftDetail->duration = $shift->duration;
-          $shiftDetail->caller = $shift->callerName;
-          if(array_key_exists($shift->start, $dayShiftData))
-          {
-            $shiftPresent = $dayShiftData[$shift->start];
+          $shifts = $shifts->shifts;
 
-            array_push($shiftPresent, $shiftDetail);
-            $dayShiftData[$shift->start] = $shiftPresent;
-          }
-          else
+          $dayShiftData = array();
+
+          //Loop through the day's shifts
+          foreach($shifts as $shift)
           {
-            $dayShiftData[$shift->start] = array($shiftDetail);
+            $shiftDetail = new \stdClass();
+            $shiftDetail->start = $shift->start;
+            $shiftDetail->duration = $shift->duration;
+            $shiftDetail->caller = $shift->callerName;
+            if(array_key_exists($shift->start, $dayShiftData))
+            {
+              $shiftPresent = $dayShiftData[$shift->start];
+
+              array_push($shiftPresent, $shiftDetail);
+              $dayShiftData[$shift->start] = $shiftPresent;
+            }
+            else
+            {
+              $dayShiftData[$shift->start] = array($shiftDetail);
+            }
           }
+          $dayWiseData[$day] = $dayShiftData;
         }
-        $dayWiseData[$day] = $dayShiftData;
-      }
 
-      $excelData = array();
-      foreach($dayWiseData as $day=>$shiftData)
-      {
-          $dayData = array();
-          foreach($shiftData as $time=>$data)
-          {
-              $timeData = array($time);
-              foreach($data as $shift)
-              {
-                array_push($timeData, $shift->caller);
-              }
-              array_push($dayData, $timeData);
-          }
-          $excelData[$day] = $dayData;
-      }
-      //return Response::json($excelData);
-      //$users = \App\User::select('id', 'name', 'email', 'created_at')->get();
+        $excelData = array();
+        foreach($dayWiseData as $day=>$shiftData)
+        {
+            $dayData = array();
+            foreach($shiftData as $time=>$data)
+            {
+                $timeData = array($time);
+                foreach($data as $shift)
+                {
+                  array_push($timeData, $shift->caller);
+                }
+                array_push($dayData, $timeData);
+            }
+            $excelData[$day] = $dayData;
+        }
+        return $excelData;
+    }
+
+    public function exportToExcel(){
+
+      $excelData = $this->getData();
+
       \Excel::create('users', function($excel) use($excelData) {
           foreach($excelData as $day=>$data)
           {
@@ -314,10 +318,23 @@ class ShiftController extends Controller
 
       })->export('xls');
 
-      // \Excel::create('Document', function($excel) use($callerData) {
-      //     $excel->sheet('Sheet', function($sheet) use($callerData){
-      //         $sheet->fromArray($callerData);
-      //     });
-      // })->download('xls');
+    }
+
+    public function exportToPDF(){
+
+      $excelData = $this->getData();
+
+      \Excel::create('users', function($excel) use($excelData) {
+          foreach($excelData as $day=>$data)
+          {
+              $excel->sheet($day, function($sheet) use($data) {
+                  //$sheet->fromArray($data);
+                  $sheet->fromArray($data, null, 'A1', false, false);
+
+              });
+          }
+
+      })->export('pdf');
+
     }
 }

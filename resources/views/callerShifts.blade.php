@@ -107,7 +107,8 @@
 
             </table>
 
-            <a href='export'>Export to Excel</a>
+            <a href='export-xls'>Export to Excel</a>
+            <a href='export-pdf'>Export to PDF</a>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 

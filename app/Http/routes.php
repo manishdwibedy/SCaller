@@ -36,4 +36,5 @@ Route::get('caller-shifts',  ['middleware' => 'auth', 'uses' => 'PageController@
 
 Route::get('caller-shift-details', 'ShiftController@getCallerShiftDetails');
 
-Route::get('export-shift-details', 'ShiftController@exportShiftDetails');
+Route::get('export-xls', 'ShiftController@exportToExcel');
+Route::get('export-pdf', 'ShiftController@exportToPDF');
