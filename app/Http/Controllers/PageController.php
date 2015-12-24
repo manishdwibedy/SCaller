@@ -35,12 +35,59 @@ class PageController extends Controller
     }
 
     public function viewCallerShifts(){
-      // $users = DB::table('users')
-      //             ->join('contacts', 'users.id', '=', 'contacts.user_id')
-      //             ->join('orders', 'users.id', '=', 'orders.user_id')
-      //             ->select('users.*', 'contacts.phone', 'orders.price')
-      //             ->get();
-        return view('callerShifts' , ['page' => 'caller-shifts']);
-    }
+        $shiftSelected = DB::table('users')
+                  ->join('caller_shifts', 'users.id', '=', 'caller_shifts.user_id')
+                  ->join('shift_defination', 'shift_defination.id', '=', 'caller_shifts.shift_id')
+                  ->select('users.name', 'shift_defination.shift_start', 'shift_defination.duration')
+                  ->where('shift_defination.active', 1)
+                  ->get();
+        Log::info('user id '. Auth::user()->id);
+        Log::info('count '. count($shiftSelected) );
 
+        $callerData = array();
+        foreach($shiftSelected as $shift)
+        {
+          if(array_key_exists($shift->name, $callerData))
+          {
+            $caller = $callerData[$shift->name];
+            $caller->shiftCount = $caller->shiftCount + 1;
+
+            $callerShifts = $caller->shifts;
+
+            $callerShift = new \stdClass();
+            $callerShift->start = $shift->shift_start;
+            $callerShift->duration = $shift->duration;
+
+            array_push($callerShifts, $callerShift);
+
+            $caller->shifts = $callerShifts;
+
+            $callerShifts = array($callerShift);
+            unset($callerData[$caller->name]);
+
+            $callerData[$caller->name] = $caller;
+
+          }
+          else {
+            Log::info('NEW');
+            // Creating a new entry
+            $caller = new \stdClass();
+            $caller->name = $shift->name;
+            $caller->shiftCount = 1;
+
+            // Inserting the shift data of the current user
+            $callerShift = new \stdClass();
+            $callerShift->start = $shift->shift_start;
+            $callerShift->duration = $shift->duration;
+
+            $callerShifts = array($callerShift);
+            $caller->shifts = $callerShifts;
+
+            // Finally insert the data
+            $callerData[$caller->name] = $caller;
+
+          }
+        }
+        return view('callerShifts' , ['page' => 'caller-shifts', 'callerData' => $callerData]);
+    }
 }

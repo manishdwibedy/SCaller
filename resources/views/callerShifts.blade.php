@@ -24,7 +24,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            View Caller Shifts 
+            View Caller Shifts
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -35,7 +35,20 @@
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
+            @foreach($callerData as $key => $value)
+              {{$key}}
+              <br>
+              {{$value->shiftCount}}
+              <br>
+              <ul>
+                @foreach($value->shifts as $shift)
+                  <li>
+                    {{$shift->start}} : {{$shift->duration}}
+                  </li>
+                @endforeach
+              </ul>
 
+            @endforeach
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
