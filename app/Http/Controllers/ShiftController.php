@@ -286,13 +286,33 @@ class ShiftController extends Controller
       }
 
       $excelData = array();
-      return Response::json($dayWiseData);
-      // $users = \App\User::select('id', 'name', 'email', 'created_at')->get();
-      // \Excel::create('users', function($excel) use($callerData) {
-      //     $excel->sheet('Sheet 1', function($sheet) use($callerData) {
-      //         $sheet->fromArray($callerData);
-      //     });
-      // })->export('xls');
+      foreach($dayWiseData as $day=>$shiftData)
+      {
+          $dayData = array();
+          foreach($shiftData as $time=>$data)
+          {
+              $timeData = array($time);
+              foreach($data as $shift)
+              {
+                array_push($timeData, $shift->caller);
+              }
+              array_push($dayData, $timeData);
+          }
+          $excelData[$day] = $dayData;
+      }
+      //return Response::json($excelData);
+      //$users = \App\User::select('id', 'name', 'email', 'created_at')->get();
+      \Excel::create('users', function($excel) use($excelData) {
+          foreach($excelData as $day=>$data)
+          {
+              $excel->sheet($day, function($sheet) use($data) {
+                  //$sheet->fromArray($data);
+                  $sheet->fromArray($data, null, 'A1', false, false);
+
+              });
+          }
+
+      })->export('xls');
 
       // \Excel::create('Document', function($excel) use($callerData) {
       //     $excel->sheet('Sheet', function($sheet) use($callerData){
