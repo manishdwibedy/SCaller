@@ -209,33 +209,33 @@ class ShiftController extends Controller
       $callerData = array();
       foreach($shiftSelected as $shift)
       {
-        if(array_key_exists($shift->name, $callerData))
+        if(array_key_exists(date("d F Y", strtotime($shift->shift_start)), $callerData))
         {
-          $caller = $callerData[$shift->name];
+          $caller = $callerData[date("d F Y", strtotime($shift->shift_start))];
           $caller->shiftCount = $caller->shiftCount + 1;
 
           $callerShifts = $caller->shifts;
 
-          $callerShift = new \stdClass();
-          $callerShift->start = date("l d F Y h:i A", strtotime($shift->shift_start));
-          $callerShift->duration = $shift->duration;
+          $callerDetail = new \stdClass();
+          $callerDetail->start = date("h:i A", strtotime($shift->shift_start));
+          $callerDetail->duration = $shift->duration;
+          $callerDetail->callerName = $shift->name;
 
-          array_push($callerShifts, $callerShift);
+          array_push($callerShifts, $callerDetail);
 
           $caller->shifts = $callerShifts;
 
-          $callerShifts = array($callerShift);
+          $callerShifts = array($callerShifts);
 
           unset($callerData[$caller->name]);
 
-          $callerData[$caller->name] = $caller;
+          $callerData[date("d F Y", strtotime($shift->shift_start))] = $caller;
 
         }
         else {
           // Creating a new entry
           $caller = new \stdClass();
           $caller->id = $shift->id;
-          $caller->name = $shift->name;
           $caller->shiftCount = 1;
 
           $date = new \DateTime();
@@ -243,31 +243,29 @@ class ShiftController extends Controller
           $caller->weekNumber = $date->format("W");
 
           //Inserting the shift data of the current user
-          $callerShift = new \stdClass();
+          $callerDetail = new \stdClass();
+          $callerDetail->start = date("h:i A", strtotime($shift->shift_start));
+          $callerDetail->duration = $shift->duration;
+          $callerDetail->callerName = $shift->name;
 
-
-
-          $callerShift->start = date("l d F Y h:i A", strtotime($shift->shift_start));
-          $callerShift->duration = $shift->duration;
-
-          $callerShifts = array($callerShift);
+          $callerShifts = array($callerDetail);
           $caller->shifts = $callerShifts;
 
           //Finally insert the data
-          $callerData[$caller->name] = $caller;
+          $callerData[date("d F Y", strtotime($shift->shift_start))] = $caller;
 
         }
       }
 
-      $excelData = array();
-      for()
 
-      $users = \App\User::select('id', 'name', 'email', 'created_at')->get();
-      \Excel::create('users', function($excel) use($callerData) {
-          $excel->sheet('Sheet 1', function($sheet) use($callerData) {
-              $sheet->fromArray($callerData);
-          });
-      })->export('xls');
+      $excelData = array();
+      return Response::json($callerData);
+      // $users = \App\User::select('id', 'name', 'email', 'created_at')->get();
+      // \Excel::create('users', function($excel) use($callerData) {
+      //     $excel->sheet('Sheet 1', function($sheet) use($callerData) {
+      //         $sheet->fromArray($callerData);
+      //     });
+      // })->export('xls');
 
       // \Excel::create('Document', function($excel) use($callerData) {
       //     $excel->sheet('Sheet', function($sheet) use($callerData){

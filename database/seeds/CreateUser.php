@@ -41,6 +41,14 @@ class CreateUser extends Seeder
             'type' => 'caller'
         ]);
 
+        // create second caller
+        DB::table('users')->insert([
+            'name' => 'caller2',
+            'email' => 'caller2@gmail.com',
+            'password' => bcrypt('caller2'),
+            'type' => 'caller'
+        ]);
+
         //create supervisor user
         DB::table('users')->insert([
             'name' => 'supervisor',

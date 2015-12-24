@@ -40,5 +40,12 @@ class CreateUserRole extends Seeder
 
         // role attach alias
         $user->attachRole($caller); // parameter can be an Role object, array, or id
+
+        // Making a caller user
+        $user = App\User::where('name', '=', 'caller2')->first();
+        $caller = App\Role::where('name', '=', 'caller')->first();
+
+        // role attach alias
+        $user->attachRole($caller); // parameter can be an Role object, array, or id
     }
 }
