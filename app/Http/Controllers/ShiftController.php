@@ -67,19 +67,36 @@ class ShiftController extends Controller
 
           $CallerShift = new \App\CallerShift;
           $CallerShift->user_id = $user->id;
+          $CallerShift->shift_id = substr($key,6);
           Log::info($key . '->' . $shift);
           if($shift == 1)
           {
-            $CallerShift->shift_id = 1;
-            $CallerShift->save();
+            $date = new \DateTime();
+            $week = $date->format("W");
+            $year = $date->format("Y");
+            $CallerShift->weekNumber = $week;
+            $CallerShift->year = $year;
 
+            Log::info("Weeknummer: $week");
+            Log::info("Year: $year");
+            $shiftPresent = \App\CallerShift
+                            ::where('user_id', Auth::user()->id)
+                            ->where('shift_id', substr($key,6))
+                            ->where('weekNumber', $week)
+                            ->where('year', $year)
+                            ->get();
+
+            // Saving only if the shift not present
+            if($shiftPresent->count() == 0)
+            {
+              $CallerShift->save();
+            }
           }
-
         }
 
-
+        $caller_shifts = \App\CallerShift::where('user_id', Auth::user()->id)->get();
         $shifts = DB::table('shift_defination')->get();
 
-        return view('schedule' , ['page' => 'manage-schedule', 'shifts' => $shifts, 'saved' => true]);
+        return view('schedule' , ['page' => 'manage-schedule', 'shifts' => $shifts, 'saved' => true, 'caller_shifts' => $caller_shifts]);
     }
 }
