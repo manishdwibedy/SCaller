@@ -52,11 +52,12 @@ class ShiftController extends Controller
 
         // Get the current user
         $user = Auth::user();
-        Log::info($user->id);
+        $date = new \DateTime();
+        $week = $date->format("W");
+        $year = $date->format("Y");
 
         // Get all the selected shifts
         $inputs = Request::all();
-        Log::info($inputs);
 
         foreach ($inputs as $key=>$shift)
         {
@@ -71,14 +72,9 @@ class ShiftController extends Controller
           Log::info($key . '->' . $shift);
           if($shift == 1)
           {
-            $date = new \DateTime();
-            $week = $date->format("W");
-            $year = $date->format("Y");
             $CallerShift->weekNumber = $week;
             $CallerShift->year = $year;
 
-            Log::info("Weeknummer: $week");
-            Log::info("Year: $year");
             $shiftPresent = \App\CallerShift
                             ::where('user_id', Auth::user()->id)
                             ->where('shift_id', substr($key,6))
@@ -90,6 +86,31 @@ class ShiftController extends Controller
             if($shiftPresent->count() == 0)
             {
               $CallerShift->save();
+            }
+          }
+          else
+          {
+            Log::info('unselected' . substr($key,6));
+            Log::info("Weeknummer: $week");
+            Log::info("Year: $year");
+            Log::info("User: " . Auth::user()->id);
+            Log::info("Shift: " . substr($key,6));
+            $shiftPresent = \App\CallerShift
+                            ::where('user_id', Auth::user()->id)
+                            ->where('shift_id', substr($key,6))
+                            ->where('weekNumber', $week)
+                            ->where('year', $year)
+                            ->get();
+
+            Log::info('count ' . $shiftPresent->count());
+
+            // Saving only if the shift not present
+            if($shiftPresent->count() != 0)
+            {
+              Log::info('Trying to delete' . $shiftPresent[0] -> id);
+              $shiftPresent[0]->delete();
+              dd(DB::getQueryLog());
+
             }
           }
         }
