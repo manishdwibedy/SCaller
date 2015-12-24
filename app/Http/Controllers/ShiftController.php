@@ -253,7 +253,6 @@ class ShiftController extends Controller
 
           //Finally insert the data
           $callerData[date("d F Y", strtotime($shift->shift_start))] = $caller;
-
         }
       }
 
