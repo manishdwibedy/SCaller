@@ -35,20 +35,46 @@
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
-            @foreach($callerData as $key => $value)
-              {{$key}}
-              <br>
-              {{$value->shiftCount}}
-              <br>
-              <ul>
-                @foreach($value->shifts as $shift)
-                  <li>
-                    {{$shift->start}} : {{$shift->duration}}
-                  </li>
-                @endforeach
-              </ul>
+            <?php
+              $counter = 1;
+            ?>
 
-            @endforeach
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>
+                    #
+                  </th>
+                  <th>
+                    Caller Name
+                  </th>
+                  <th>
+                    Number of Shifts
+                  </th>
+                  <th>
+                    Details
+                  </th>
+                </tr>
+              </thead>
+              @foreach($callerData as $callerName => $callerDetail)
+              <tr>
+                <td>
+                  {{$counter++}}
+                </td>
+                <td>
+                  {{$callerName}}
+                </td>
+                <td>
+                  {{$callerDetail -> shiftCount}}
+                </td>
+                <td>
+                  Some
+                </td>
+              </tr>
+              @endforeach
+
+            </table>
+
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->

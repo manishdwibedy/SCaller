@@ -52,17 +52,17 @@ class PageController extends Controller
             $caller = $callerData[$shift->name];
             $caller->shiftCount = $caller->shiftCount + 1;
 
-            $callerShifts = $caller->shifts;
-
-            $callerShift = new \stdClass();
-            $callerShift->start = $shift->shift_start;
-            $callerShift->duration = $shift->duration;
-
-            array_push($callerShifts, $callerShift);
-
-            $caller->shifts = $callerShifts;
-
-            $callerShifts = array($callerShift);
+            // $callerShifts = $caller->shifts;
+            //
+            // $callerShift = new \stdClass();
+            // $callerShift->start = $shift->shift_start;
+            // $callerShift->duration = $shift->duration;
+            //
+            // array_push($callerShifts, $callerShift);
+            //
+            // $caller->shifts = $callerShifts;
+            //
+            // $callerShifts = array($callerShift);
             unset($callerData[$caller->name]);
 
             $callerData[$caller->name] = $caller;
@@ -76,12 +76,12 @@ class PageController extends Controller
             $caller->shiftCount = 1;
 
             // Inserting the shift data of the current user
-            $callerShift = new \stdClass();
-            $callerShift->start = $shift->shift_start;
-            $callerShift->duration = $shift->duration;
-
-            $callerShifts = array($callerShift);
-            $caller->shifts = $callerShifts;
+            // $callerShift = new \stdClass();
+            // $callerShift->start = $shift->shift_start;
+            // $callerShift->duration = $shift->duration;
+            //
+            // $callerShifts = array($callerShift);
+            // $caller->shifts = $callerShifts;
 
             // Finally insert the data
             $callerData[$caller->name] = $caller;
