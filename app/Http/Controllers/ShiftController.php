@@ -141,9 +141,9 @@ class ShiftController extends Controller
         $callerData = array();
         foreach($shiftSelected as $shift)
         {
-          if(array_key_exists($shift->name, $callerData))
+          if(array_key_exists('caller', $callerData))
           {
-            $caller = $callerData[$shift->name];
+            $caller = $callerData['caller'];
             $caller->shiftCount = $caller->shiftCount + 1;
 
             $callerShifts = $caller->shifts;
@@ -160,7 +160,7 @@ class ShiftController extends Controller
 
             unset($callerData[$caller->name]);
 
-            $callerData[$caller->name] = $caller;
+            $callerData['caller'] = $caller;
 
           }
           else {
@@ -186,7 +186,7 @@ class ShiftController extends Controller
             $caller->shifts = $callerShifts;
 
             //Finally insert the data
-            $callerData[$caller->name] = $caller;
+            $callerData['caller'] = $caller;
 
           }
         }
