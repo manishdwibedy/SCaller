@@ -68,7 +68,7 @@
                   {{$callerDetail -> shiftCount}}
                 </td>
                 <td>
-                  Some
+                  Some {{ $callerDetail -> id }} - {{ $callerDetail -> weekNumber}}
                 </td>
               </tr>
               @endforeach
