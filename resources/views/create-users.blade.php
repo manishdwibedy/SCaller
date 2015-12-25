@@ -5,9 +5,36 @@
     @include('common.scripts')
 
     {!! HTML::style('css/bootstrap-switch.css') !!}
+    {!! HTML::style('css/multiple-emails.css') !!}
     {!! HTML::script('js/bootstrap-switch.js') !!}
+    {!! HTML::script('js/multiple-emails.js') !!}
 
     <script>
+    $(document).ready(function() {
+        $('#users').multiple_emails({
+           position: 'top', // Display the added emails above the input
+           theme: 'bootstrap', // Bootstrap is the default theme
+           checkDupEmail: true // Should check for duplicate emails added
+        });
+
+    });
+
+    function createUsers(form)
+    {
+        var my_emails = $('#users').val();
+        if(my_emails.length > 0)
+        {
+            console.log('submitting '+my_emails);
+            form.submit();
+        }
+        else
+        {
+            console.log('Error : ' );
+        }
+
+
+    }
+
     function test(form)
     {
         var userInput = $('#users').val();
@@ -82,12 +109,12 @@
 
                 </div>
 
-                {!! Form::open(array( 'method' => 'post', 'url' => 'create-users', 'onsubmit' => 'test(this); return false;')) !!}
+                {!! Form::open(array( 'method' => 'post', 'url' => 'create-users', 'onsubmit' => 'createUsers(this); return false;')) !!}
                 {!! csrf_field() !!}
 
                 <div class="form-group">
                   <label for="comment">User to add:</label>
-                  <textarea class="form-control" rows="5" id="users"></textarea>
+                  <input type="text" class="form-control" id="users">
                 </div>
                 {!! Form::submit('Save Shift Schedule!', array('class'=>'btn btn-primary')) !!}
 
