@@ -22,9 +22,10 @@
     function createUsers(form)
     {
         var my_emails = $('#users').val();
-        if(my_emails.length > 0)
+        if(my_emails.length > 2)
         {
-            console.log('submitting '+my_emails);
+
+            console.log(JSON.parse("[" + my_emails + "]"));
             form.submit();
         }
         else
