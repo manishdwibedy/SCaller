@@ -83,8 +83,14 @@
 			                        	<input type="password" name="password" placeholder="Password..." class="password form-control" id="password">
 			                        </div>
                               <div class="form-group">
-                                <input name="remember" id="remember" type="checkbox" class="checkbox">
-                                Keep me signed in
+                                  <div class='row'>
+                                      <div class='col-xs-6'>
+                                          <input name="remember" id="remember" type="checkbox" class="checkbox">Keep me signed in</input>
+                                      </div>
+                                      <div class='col-xs-6 text-right'>
+                                          <a href='reset-password'>Forgot Password</a>
+                                      </div>
+                                  </div>
 
 
                               </div>
