@@ -41,5 +41,12 @@ Route::get('caller-shift-details', 'ShiftController@getCallerShiftDetails');
 Route::get('export-xls', 'ShiftController@exportToExcel');
 Route::get('export-pdf', 'ShiftController@exportToPDF');
 
+// Creating users
 Route::get('create-users', 'PageController@createUsers');
 Route::post('create-users', 'CreateUsers@createUsers');
+
+//
+Route::get('reset-password', 'Auth\PasswordController@getEmail');
+Route::post('reset-password', 'Auth\PasswordController@postEmail');
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@resetPassword');

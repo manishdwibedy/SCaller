@@ -53,14 +53,6 @@
                         		<div class="form-top-center logo">
                         			<img src="/images/RuffaloCody.png">
                         		</div>
-                            <?php
-                            if($err)
-                            {
-                            ?>
-                              <div class="alert alert-danger login-error" role="alert">Invalid username/password</div>
-                            <?php
-                            }
-                            ?>
 
                             @if (count($errors) > 0)
                                 <div class="alert alert-danger login-error" role="alert">
@@ -71,26 +63,40 @@
                             @endif
                         		</div>
                             <div class="form-bottom">
-			                    <form role="form" action="{{url('auth/login')}}" method="post" class="login-form">
-                            {!! csrf_field() !!}
 
-			                    	<div class="form-group">
-			                    		<label class="sr-only" for="">Username</label>
-			                        	<input type="text" name="email" placeholder="Username..." class="email form-control" id="email">
-			                        </div>
-			                        <div class="form-group">
-			                        	<label class="sr-only" for="password">Password</label>
-			                        	<input type="password" name="password" placeholder="Password..." class="password form-control" id="password">
-			                        </div>
-                              <div class="form-group">
-                                <input name="remember" id="remember" type="checkbox" class="checkbox">
-                                Keep me signed in
+                                <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
+            						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+            						<input type="hidden" name="token" value="{{ $token }}">
 
+            						<div class="form-group">
+            							<label class="col-md-4 control-label">E-Mail Address</label>
+            							<div class="col-md-6">
+            								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+            							</div>
+            						</div>
 
-                              </div>
+            						<div class="form-group">
+            							<label class="col-md-4 control-label">Password</label>
+            							<div class="col-md-6">
+            								<input type="password" class="form-control" name="password">
+            							</div>
+            						</div>
 
-			                        <button type="submit" class="btn">Sign in!</button>
-			                    </form>
+            						<div class="form-group">
+            							<label class="col-md-4 control-label">Confirm Password</label>
+            							<div class="col-md-6">
+            								<input type="password" class="form-control" name="password_confirmation">
+            							</div>
+            						</div>
+
+            						<div class="form-group">
+            							<div class="col-md-6 col-md-offset-4">
+            								<button type="submit" class="btn btn-primary">
+            									Reset Password
+            								</button>
+            							</div>
+            						</div>
+            					</form>
 		                    </div>
                         </div>
                     </div>

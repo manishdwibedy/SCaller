@@ -53,45 +53,10 @@
                         		<div class="form-top-center logo">
                         			<img src="/images/RuffaloCody.png">
                         		</div>
-                            <?php
-                            if($err)
-                            {
-                            ?>
-                              <div class="alert alert-danger login-error" role="alert">Invalid username/password</div>
-                            <?php
-                            }
-                            ?>
 
-                            @if (count($errors) > 0)
-                                <div class="alert alert-danger login-error" role="alert">
-                                    @foreach ($errors->all() as $error)
-                                        {{ $error }}
-                                    @endforeach
-                                </div>
-                            @endif
-                        		</div>
-                            <div class="form-bottom">
-			                    <form role="form" action="{{url('auth/login')}}" method="post" class="login-form">
-                            {!! csrf_field() !!}
+                                Click here to reset your password: {{ url('password/reset/'.$token) }}
 
-			                    	<div class="form-group">
-			                    		<label class="sr-only" for="">Username</label>
-			                        	<input type="text" name="email" placeholder="Username..." class="email form-control" id="email">
-			                        </div>
-			                        <div class="form-group">
-			                        	<label class="sr-only" for="password">Password</label>
-			                        	<input type="password" name="password" placeholder="Password..." class="password form-control" id="password">
-			                        </div>
-                              <div class="form-group">
-                                <input name="remember" id="remember" type="checkbox" class="checkbox">
-                                Keep me signed in
-
-
-                              </div>
-
-			                        <button type="submit" class="btn">Sign in!</button>
-			                    </form>
-		                    </div>
+                        	</div>
                         </div>
                     </div>
                     <!-- <div class="row">

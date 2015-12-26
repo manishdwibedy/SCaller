@@ -133,5 +133,4 @@ class LoginController extends Controller
         return view('manage-schedule' , ['page' => 'home', 'saved' => true]);
         //echo 'asd'.$name;
     }
-
 }

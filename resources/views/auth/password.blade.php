@@ -53,14 +53,6 @@
                         		<div class="form-top-center logo">
                         			<img src="/images/RuffaloCody.png">
                         		</div>
-                            <?php
-                            if($err)
-                            {
-                            ?>
-                              <div class="alert alert-danger login-error" role="alert">Invalid username/password</div>
-                            <?php
-                            }
-                            ?>
 
                             @if (count($errors) > 0)
                                 <div class="alert alert-danger login-error" role="alert">
@@ -71,25 +63,18 @@
                             @endif
                         		</div>
                             <div class="form-bottom">
-			                    <form role="form" action="{{url('auth/login')}}" method="post" class="login-form">
-                            {!! csrf_field() !!}
+			                    <form role="form" action="{{url('reset-password')}}" method="post" class="login-form">
+                                    {!! csrf_field() !!}
 
 			                    	<div class="form-group">
 			                    		<label class="sr-only" for="">Username</label>
-			                        	<input type="text" name="email" placeholder="Username..." class="email form-control" id="email">
+			                        	<input type="text" name="email" placeholder="Enter your registered email id" class="email form-control" id="email">
 			                        </div>
-			                        <div class="form-group">
-			                        	<label class="sr-only" for="password">Password</label>
-			                        	<input type="password" name="password" placeholder="Password..." class="password form-control" id="password">
-			                        </div>
-                              <div class="form-group">
-                                <input name="remember" id="remember" type="checkbox" class="checkbox">
-                                Keep me signed in
 
 
-                              </div>
-
-			                        <button type="submit" class="btn">Sign in!</button>
+			                        <button type="submit" class="btn">
+                                        Send Password Reset Link
+                                    </button>
 			                    </form>
 		                    </div>
                         </div>
