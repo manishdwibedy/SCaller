@@ -2,7 +2,7 @@ Hi, {{$name}} <br><br>
 
 Welcome to the Trojan Family!! <br> <br>
 
-Yourlogin details are as follows: <br> <br>
+Your login details are as follows: <br> <br>
 
 User ID  : {{$username}} <br>
 Password : {{$password}} <br><br>

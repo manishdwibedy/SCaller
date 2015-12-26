@@ -16,34 +16,30 @@ class CreateUsers extends Controller
     {
         $inputs = Request::all();
 
-        $users = json_decode(Request::input('users'));
-        foreach($users as $user)
+        $emails = json_decode(Request::input('users'));
+        foreach($emails as $email)
         {
-            Log::info ($user);
+            Log::info ('username - ' . $email);
 
-            // DB::table('users')->insert([
-            //     'name' => $user,
-            //     'email' => $user,
-            //     'password' => bcrypt($user),
-            //     'type' => 'caller'
-            // ]);
-            //
-            // // Making a caller user
-            // $user = \App\User::where('name', '=', $user)->first();
-            // $caller = \App\Role::where('name', '=', 'caller')->first();
-            //
-            // // role attach alias
-            // $user->attachRole($caller); // parameter can be an Role object, array, or id
+            $password = str_random(10);
+            DB::table('users')->insert([
+                'name' => $email,
+                'email' => $email,
+                'password' => bcrypt($password),
+                'type' => 'caller'
+            ]);
 
-            // $message = 'An account has been created for you. The details are as follows: <br> ';
-            // $message .= 'User ID - ' . $user . '<br>';
-            // $message .= 'Password - ' . $user . '<br><br>';
-            // $message .= 'Regards <br> Manish Dwibedy';
+            // Making a caller user
+            $user = \App\User::where('name', '=', $email)->first();
+            $caller = \App\Role::where('name', '=', 'caller')->first();
+
+            // role attach alias
+            $user->attachRole($caller); // parameter can be an Role object, array, or id
 
             $data = array(
-                        'name' => $user,
-                        'username' => $user,
-                        'password' => $user
+                        'name' => $email,
+                        'username' => $email,
+                        'password' => $password
                     );
 
             \Mail::send('mail.email', $data, function ($message) use ($data) {
