@@ -54,10 +54,10 @@
                         			<img src="/images/RuffaloCody.png">
                         		</div>
                             <?php
-                            if($err)
+                            if(session('err'))
                             {
                             ?>
-                              <div class="alert alert-danger login-error" role="alert">{{$err}}</div>
+                              <div class="alert alert-danger login-error" role="alert">{{session('err') }}</div>
                             <?php
                             }
                             ?>
@@ -72,7 +72,7 @@
                         		</div>
                             <div class="form-bottom">
 			                    <form role="form" action="{{url('auth/login')}}" method="post" class="login-form">
-                            {!! csrf_field() !!}
+                                    {!! csrf_field() !!}
 
 			                    	<div class="form-group">
 			                    		<label class="sr-only" for="">Username</label>

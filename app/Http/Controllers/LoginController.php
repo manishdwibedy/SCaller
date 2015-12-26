@@ -106,11 +106,12 @@ class LoginController extends Controller
       }
       else if (Auth::attempt(array('email' => Request::get('email'),'password' => Request::get('password'), 'active' => 0)))
       {
-          return view('login')->with('err', 'Inactive account');
+          return redirect('/')->with('err', 'Inactive account');
       }
       else{
           Log::info('Login failed');
-          return view('login')->with('err', 'Wrong username/password');
+          //return view('login')->with('err', 'Wrong username/password');
+          return redirect('/')->with('err', 'Wrong username/password');
       }
     }
 
