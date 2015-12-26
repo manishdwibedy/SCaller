@@ -49,4 +49,4 @@ Route::post('create-users', 'CreateUsers@createUsers');
 Route::get('reset-password', 'Auth\PasswordController@getEmail');
 Route::post('reset-password', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
-Route::post('password/reset', 'Auth\PasswordController@resetPassword');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
