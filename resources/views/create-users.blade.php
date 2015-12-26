@@ -115,7 +115,7 @@
 
                 <div class="form-group">
                   <label for="comment">User to add:</label>
-                  <input type="text" class="form-control" id="users">
+                  <input type="text" class="form-control" id="users" name="users">
                 </div>
                 {!! Form::submit('Save Shift Schedule!', array('class'=>'btn btn-primary')) !!}
 
