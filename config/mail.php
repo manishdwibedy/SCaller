@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'manish.dwibedy@ruffalocody.com', 'name' => 'Manish Dwibedy'],
 
     /*
     |--------------------------------------------------------------------------
