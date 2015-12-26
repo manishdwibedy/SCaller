@@ -57,7 +57,7 @@
                             if($err)
                             {
                             ?>
-                              <div class="alert alert-danger login-error" role="alert">Invalid username/password</div>
+                              <div class="alert alert-danger login-error" role="alert">{{$err}}</div>
                             <?php
                             }
                             ?>

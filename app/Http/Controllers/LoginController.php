@@ -99,14 +99,18 @@ class LoginController extends Controller
      * Trying to login the user
      */
     public function attemptLogin(){
-      if (Auth::attempt(array('email' => Request::get('email'),'password' => Request::get('password'))))
+      if (Auth::attempt(array('email' => Request::get('email'),'password' => Request::get('password'), 'active' => 1)))
       {
           Log::info('Trying to login' );
           return redirect()->intended('home');
       }
+      else if (Auth::attempt(array('email' => Request::get('email'),'password' => Request::get('password'), 'active' => 0)))
+      {
+          return view('login')->with('err', 'Inactive account');
+      }
       else{
           Log::info('Login failed');
-          return view('login')->with('err', 'Wrong username');
+          return view('login')->with('err', 'Wrong username/password');
       }
     }
 
