@@ -91,7 +91,6 @@
                     $endTime->add(new DateInterval("PT" . $shifts[$counter]->duration .  "H"));
                     $endTime = $endTime->format('h:i A');
                   ?>
-                        @if ($shifts[$counter] -> active === 1)
                         <div class="col-xs-6 col-md-2 text-center">
                           <div class='timeLabel'>
                             {{ date('h:i A', strtotime($shifts[$counter] -> shift_start)) }}
@@ -103,10 +102,7 @@
                           <input type="checkbox" class="shift" id='shift_{{$shifts[$counter]->id}}'></input>
                           <input type="hidden" name="shift_{{$shifts[$counter++]->id}}" value='0'>
                         </div>
-                      @else
-                        <?php $counter++; ?>
-                      @endif
-
+                      
                   @endfor
 
 
