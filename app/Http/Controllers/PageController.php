@@ -13,17 +13,28 @@ use Log;
 class PageController extends Controller
 {
     /**
-     * Returns the user to the scheduling page
+     * Returns the caller to the scheduling page, showing current
      */
     public function schedule(){
         $shifts = DB::table('shift_defination')->get();
 
+        $nextSunday = date("Y-m-d", strtotime('next sunday'));
+
         Log::info('user ID is '. Auth::user()->id);
-        $caller_shifts = \App\CallerShift::where('user_id', Auth::user()->id)->get();
+        $nextSunday = date("Y-m-d", strtotime('next sunday'));
+        $date = new \DateTime($nextSunday);
+        $weekNumber = $date->format('W');
+        Log::info('weekNumber is '. $weekNumber);
+
+        $caller_shifts = \App\CallerShift::
+                            where('user_id', Auth::user()->id)
+                            ->where('weeknumber', $weekNumber)
+                            ->get();
         Log::info('shifts is '. $caller_shifts);
 
+
         foreach($caller_shifts as $shift)
-          Log::info($shift->shift_id);
+          Log::info('shift : ' . $shift->shift_id);
         //return view('schedule' , ['page' => 'schedule', 'shifts' => $shifts ]);
         return view('schedule' , ['page' => 'schedule', 'shifts' => $shifts , 'caller_shifts' => $caller_shifts]);
     }
