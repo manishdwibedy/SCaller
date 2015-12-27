@@ -66,12 +66,19 @@
 
                                 <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/reset') }}">
             						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-            						<input type="hidden" name="token" value="{{ $token }}">
+            						<input type="hidden" name="token" value="{{ $data['token'] }}">
 
             						<div class="form-group">
             							<label class="col-md-4 control-label">E-Mail Address</label>
             							<div class="col-md-6">
-            								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
+            								<input type="email" class="form-control" name="email" value="{{ $data['email'] }}">
+            							</div>
+            						</div>
+
+                                    <div class="form-group">
+            							<label class="col-md-4 control-label">Name</label>
+            							<div class="col-md-6">
+            								<input type="text" class="form-control" name="name">
             							</div>
             						</div>
 

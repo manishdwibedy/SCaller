@@ -99,14 +99,10 @@ class LoginController extends Controller
      * Trying to login the user
      */
     public function attemptLogin(){
-      if (Auth::attempt(array('email' => Request::get('email'),'password' => Request::get('password'), 'active' => 1)))
+      if (Auth::attempt(array('email' => Request::get('email'),'password' => Request::get('password'))))
       {
           Log::info('Trying to login' );
           return redirect()->intended('home');
-      }
-      else if (Auth::attempt(array('email' => Request::get('email'),'password' => Request::get('password'), 'active' => 0)))
-      {
-          return redirect('/')->with('err', 'Inactive account');
       }
       else{
           Log::info('Login failed');
@@ -137,5 +133,46 @@ class LoginController extends Controller
         //return view('manage-schedule')->with(array('saved', true));
         return view('manage-schedule' , ['page' => 'home', 'saved' => true]);
         //echo 'asd'.$name;
+    }
+
+    public function showActivateAccount()
+    {
+        return view('auth.activate');
+    }
+
+    public function activateAccount(\Illuminate\Http\Request $request)
+    {
+        //Log::info($request);
+
+        $inputs = Request::all();
+
+        foreach($inputs as $input=>$value)
+        {
+            Log::info($input . ' - ' . $value);
+        }
+
+        $this->validate($request, [
+            //'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:2',
+        ]);
+
+        $credentials = $request->only(
+            'email', 'password', 'password_confirmation', 'token'
+        );
+
+        $response = \Password::reset($credentials, function ($user, $password) {
+            $this->resetPassword($user, $password);
+        });
+
+        switch ($response) {
+            case \Password::PASSWORD_RESET:
+                return redirect($this->redirectPath())->with('status', trans($response));
+
+            default:
+                return redirect()->back()
+                            ->withInput($request->only('email'))
+                            ->withErrors(['email' => trans($response)]);
+        }
     }
 }

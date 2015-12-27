@@ -50,3 +50,6 @@ Route::get('reset-password', 'Auth\PasswordController@getEmail');
 Route::post('reset-password', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
+
+Route::get('activateAccount', 'LoginController@showActivateAccount');
+Route::post('activateAccount', 'LoginController@activateAccount');
