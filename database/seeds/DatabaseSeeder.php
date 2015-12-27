@@ -15,12 +15,13 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
 
-        $this->call(CreateUser::class);
-        $this->call(CreateRole::class);
-        $this->call(CreateUserRole::class);
-        $this->call(CreatePermissions::class);
-        $this->call(CreateRolePermission::class);
-        $this->call(LoadShiftDefination::class);
+        // $this->call(CreateUser::class);
+        // $this->call(CreateRole::class);
+        // $this->call(CreateUserRole::class);
+        // $this->call(CreatePermissions::class);
+        // $this->call(CreateRolePermission::class);
+        // $this->call(LoadShiftDefination::class);
+        $this->call(ShiftPreferences::class);
         Model::reguard();
     }
 }
