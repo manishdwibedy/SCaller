@@ -69,7 +69,7 @@ trait ResetsPasswords
         }
 
         // Getting the user's name to be shown on the reset page
-        //$user = \DB::table('password_resets')->where('token', $token)->first();
+        $user = \DB::table('password_resets')->where('token', $token)->first();
 
         $data = array(
             'token'  => $token,
@@ -99,9 +99,9 @@ trait ResetsPasswords
         );
 
         // Updating the user's name when activating account
-        // \DB::table('users')
-        //     ->where('email', $request->input('email'))
-        //     ->update(['name' => $request->input('name')]);
+        \DB::table('users')
+            ->where('email', $request->input('email'))
+            ->update(['name' => $request->input('name')]);
 
         $response = Password::reset($credentials, function ($user, $password) {
             $this->resetPassword($user, $password);
