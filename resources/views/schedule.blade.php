@@ -29,6 +29,7 @@
 
         @foreach($caller_shifts as $shift)
           $('input[id="shift_{{$shift->shift_id}}"]').bootstrapSwitch('state', true, true);
+          $('input[name=shift_{{$shift->shift_id}}').val(1);
         @endforeach
 
         $(".shift").on('switchChange.bootstrapSwitch', function(event, state) {

@@ -72,6 +72,8 @@ class ShiftController extends Controller
           $CallerShift->user_id = $user->id;
           $CallerShift->shift_id = substr($key,6);
           Log::info($key . '->' . $shift);
+
+          // The shift is selected by the user
           if($shift == 1)
           {
             $CallerShift->weekNumber = $week;
@@ -86,17 +88,24 @@ class ShiftController extends Controller
                             ->get();
 
             // Saving only if the shift not present
+            // The shift is not present earlier, thereby saving the shift
             if($shiftPresent->count() == 0)
             {
                 Log::info('need to save the shift');
-                $shiftPresent[0]->save();
+                $CallerShift->save();
             }
+            // The shift was present earlier, then restore it if it was deleted by the user
             else
             {
-                Log::info('need to restore the shift');
-                $shiftPresent[0]->restore();
+                if($shiftPresent[0]->trashed())
+                {
+                    Log::info('need to restore the shift' . $shiftPresent[0]->id);
+                    $shiftPresent[0]->restore();
+                }
             }
           }
+
+          // The shift is not selected by the user
           else
           {
             Log::info('unselected' . substr($key,6));
@@ -104,8 +113,8 @@ class ShiftController extends Controller
             Log::info("Year: $year");
             Log::info("User: " . Auth::user()->id);
             Log::info("Shift: " . substr($key,6));
-            $shiftPresent = \App\CallerShift
-                            ::where('user_id', Auth::user()->id)
+            $shiftPresent = \App\CallerShift::withTrashed()
+                            ->where('user_id', Auth::user()->id)
                             ->where('shift_id', substr($key,6))
                             ->where('weekNumber', $week)
                             ->where('year', $year)
@@ -113,10 +122,11 @@ class ShiftController extends Controller
 
             Log::info('count ' . $shiftPresent->count());
 
-            // Saving only if the shift not present
+            // Deleting it if the shift not present in the table
             if($shiftPresent->count() != 0)
             {
-              $shiftPresent[0]->delete();
+                Log::info('deleting the shift' . $shiftPresent[0]->id );
+                $shiftPresent[0]->delete();
             }
           }
         }

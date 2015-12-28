@@ -50,6 +50,8 @@ class PageController extends Controller
 
         return view('schedule' , ['page' => 'schedule',
                                         'shifts' => $shifts,
+                                        'mailed' => false,
+                                        'saved' => false,
                                         'shiftAvailability' => $shiftAvailability,
                                         'caller_shifts' => $caller_shifts
                                     ]);
