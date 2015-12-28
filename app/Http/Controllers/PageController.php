@@ -32,11 +32,31 @@ class PageController extends Controller
                             ->get();
         Log::info('shifts is '. $caller_shifts);
 
+        $currentShifts = DB::table('caller_shifts')
+                                ->select('shift_id', DB::raw('count(*) as total'))
+                                ->where('weeknumber', $weekNumber)
+                                ->groupBy('shift_id')
+                                ->get();
+        $shiftAvailability = array();
+        Log::info($currentShifts);
+        foreach($currentShifts as $shift)
+        {
+            $shiftAvailability[$shift->shift_id] = $shift->total;
+            Log::info($shift->shift_id . '--' . $shift->total);
+        }
 
-        foreach($caller_shifts as $shift)
-          Log::info('shift : ' . $shift->shift_id);
+        foreach($shiftAvailability as $key=>$value)
+        {
+            Log::info($key . '::' . $value);
+        }
+
+
         //return view('schedule' , ['page' => 'schedule', 'shifts' => $shifts ]);
-        return view('schedule' , ['page' => 'schedule', 'shifts' => $shifts , 'caller_shifts' => $caller_shifts]);
+        return view('schedule' , ['page' => 'schedule',
+                                        'shifts' => $shifts,
+                                        'shiftAvailability' => $shiftAvailability,
+                                        'caller_shifts' => $caller_shifts
+                                    ]);
     }
 
     public function manageShifts(){
