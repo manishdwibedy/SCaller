@@ -39,9 +39,11 @@
           else {
             $('input[name=shift_' + shiftID + ']').val(0);
           }
+        });
 
-
-
+        $( "#confirm" ).click(function() {
+            $('#confirmationEmail').val('on');
+            document.shiftSchedule.submit();
         });
     });
     </script>
@@ -74,11 +76,30 @@
             $counter = 0;
           ?>
           <div class="container-fluid">
-            <div class="row">
-              {!! Form::open(array('url' => 'schedule')) !!}
-              {!! csrf_field() !!}
+              @if($mailed and !$saved )
+              <div class="alert alert-success " role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                Shift Confirmation has been sent to the manager.
+              </div>
+              @endif
+              @if($saved and !$mailed)
+              <div class="alert alert-success " role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                Shift scheduling has been updated.
+              </div>
+              @endif
+              @if($mailed and $saved)
+              <div class="alert alert-success " role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                Shift scheduling has been updated and confirmation has been sent to the manager.
+              </div>
+              @endif
+                <div class="row">
+                {!! Form::open(array('url' => 'schedule', 'name' => 'shiftSchedule')) !!}
+                {!! csrf_field() !!}
+                <input type='hidden' id='confirmationEmail' name='confirmationEmail' value='off'>
 
-              @for ($day = 0; $day < 6; $day++)
+                @for ($day = 0; $day < 6; $day++)
                 <?php
                   $date = strtotime("+".$day." days", strtotime($nextSunday));
                 ?>
@@ -114,23 +135,23 @@
                                  data-on-text='{{$offText}}'
                                  data-off-text="{{$count}} / 28" data-on-color={{$onColor}}></input>
                           <input type="hidden" name="shift_{{$shifts[$counter++]->id}}" value='0'>
-
-
                         </div>
 
                   @endfor
 
 
                 </div>
-              @endfor
-              <br>
+                @endfor
+                <br>
+                {!! Form::submit('Save Shift Schedule!', array('class'=>'btn btn-primary')) !!}
 
-              {!! Form::submit('Save Shift Schedule!', array('class'=>'btn btn-primary')) !!}
-
-              {!! Form::close() !!}
+                <input id='confirm' class='btn btn-success' value='Send Confirmation!'></input>
 
 
-            </div>
+                {!! Form::close() !!}
+                <br/><br/>
+
+                </div>
 
           </div>
 

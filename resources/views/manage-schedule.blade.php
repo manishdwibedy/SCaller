@@ -54,7 +54,7 @@
             @if ($showMessage)
               <div class="alert alert-success " role="alert">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                Shift Information has been updated successfully.
+                Shift schedule confirmation has bee
               </div>
             @endif
 

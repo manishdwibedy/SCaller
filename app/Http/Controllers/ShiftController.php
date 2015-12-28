@@ -140,13 +140,38 @@ class ShiftController extends Controller
                             ->where('weeknumber', $week)
                             ->whereNull('deleted_at')
                             ->get();
+
         Log::info('no. of shifts - '.$caller_shifts->count());
         $shifts = DB::table('shift_defination')->get();
 
+        $confirmationEmail = Request::input('confirmationEmail');
+        $mailed = false;
+        if($confirmationEmail == 'on')
+        {
+            $mailed = true;
+            $managerEmail = DB::table('preferences')
+                            ->where('name','managerEmail')
+                            ->get()[0]
+                            ->value;
+            Log::info($managerEmail);
+            $data = array(
+                        'name' => Auth::user()->name,
+                        'shifts' => $caller_shifts,
+                        'managerEmail' => $managerEmail
+                    );
 
-        return view('schedule' , ['page' => 'manage-schedule', 'shifts' => $shifts,
-                                    'saved' => true, 'caller_shifts' => $caller_shifts,
-                                    'shiftAvailability' => $shiftAvailability
+            \Mail::send('mail.shiftConfirmation', $data, function ($message) use ($data) {
+              $message->subject('Shift Confirmation - ' . Auth::user()->name)
+                      ->to($data['managerEmail']);
+            });
+            Log::info('Sending an email to the manager');
+        }
+        return view('schedule' , ['page' => 'manage-schedule',
+                                  'shifts' => $shifts,
+                                  'saved' => true,
+                                  'mailed' => $mailed,
+                                  'caller_shifts' => $caller_shifts,
+                                  'shiftAvailability' => $shiftAvailability
                                 ]);
     }
 
@@ -215,7 +240,6 @@ class ShiftController extends Controller
 
             //Finally insert the data
             $callerData['caller'] = $caller;
-
           }
         }
         return Response::json($callerData);
