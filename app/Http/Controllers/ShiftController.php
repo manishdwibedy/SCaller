@@ -132,7 +132,7 @@ class ShiftController extends Controller
         {
             $shiftInfo = new \stdClass();
             $shiftInfo->total = $shift->total;
-            $shiftInfo->text =  'Done';
+            $shiftInfo->text =  'Planned';
             $shiftAvailability[$shift->shift_id] = $shiftInfo;
         }
 
@@ -219,7 +219,6 @@ class ShiftController extends Controller
           }
         }
         return Response::json($callerData);
-        //return view('callerShifts' , ['page' => 'caller-shifts', 'callerData' => $callerData]);
     }
 
     private function getData()
