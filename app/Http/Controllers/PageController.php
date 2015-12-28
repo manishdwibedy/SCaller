@@ -35,20 +35,19 @@ class PageController extends Controller
         $currentShifts = DB::table('caller_shifts')
                                 ->select('shift_id', DB::raw('count(*) as total'))
                                 ->where('weeknumber', $weekNumber)
+                                ->whereNull('deleted_at')
                                 ->groupBy('shift_id')
                                 ->get();
         $shiftAvailability = array();
         Log::info($currentShifts);
         foreach($currentShifts as $shift)
         {
-            $shiftAvailability[$shift->shift_id] = $shift->total;
-            Log::info($shift->shift_id . '--' . $shift->total);
+            $shiftInfo = new \stdClass();
+            $shiftInfo->total = $shift->total;
+            $shiftInfo->text =  'Planned';
+            $shiftAvailability[$shift->shift_id] = $shiftInfo;
         }
 
-        foreach($shiftAvailability as $key=>$value)
-        {
-            Log::info($key . '::' . $value);
-        }
 
 
         //return view('schedule' , ['page' => 'schedule', 'shifts' => $shifts ]);

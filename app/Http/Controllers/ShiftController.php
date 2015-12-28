@@ -53,7 +53,8 @@ class ShiftController extends Controller
 
         // Get the current user
         $user = Auth::user();
-        $date = new \DateTime();
+        $nextSunday = date("Y-m-d", strtotime('next sunday'));
+        $date = new \DateTime($nextSunday);
         $week = $date->format("W");
         $year = $date->format("Y");
 
@@ -116,10 +117,27 @@ class ShiftController extends Controller
           }
         }
 
+        $currentShifts = DB::table('caller_shifts')
+                                ->select('shift_id', DB::raw('count(*) as total'))
+                                ->where('weeknumber', $week)
+                                ->groupBy('shift_id')
+                                ->get();
+        $shiftAvailability = array();
+        foreach($currentShifts as $shift)
+        {
+            $shiftInfo = new \stdClass();
+            $shiftInfo->total = $shift->total;
+            $shiftInfo->text =  'Done';
+            $shiftAvailability[$shift->shift_id] = $shiftInfo;
+        }
+
         $caller_shifts = \App\CallerShift::where('user_id', Auth::user()->id)->get();
         $shifts = DB::table('shift_defination')->get();
 
-        return view('schedule' , ['page' => 'manage-schedule', 'shifts' => $shifts, 'saved' => true, 'caller_shifts' => $caller_shifts]);
+        return view('schedule' , ['page' => 'manage-schedule', 'shifts' => $shifts,
+                                    'saved' => true, 'caller_shifts' => $caller_shifts,
+                                    'shiftAvailability' => $shiftAvailability
+                                ]);
     }
 
     public function getCallerShiftDetails(){

@@ -101,13 +101,18 @@
                         <div class="col-xs-6 col-md-2 text-center">
                             <?php
                                 $count = 0;
+                                $offText = 'Pending';
+                                $onColor = 'warning';
                                 if (array_key_exists($shifts[$counter]->id, $shiftAvailability))
                                 {
-                                     $count = $shiftAvailability[$shifts[$counter]->id];
+                                    $count = $shiftAvailability[$shifts[$counter]->id] -> total;
+                                    $offText = $shiftAvailability[$shifts[$counter]->id] -> text;
+                                    $offColor = 'success';
                                 }
-
                             ?>
-                          <input type="checkbox" class="shift" id='shift_{{$shifts[$counter]->id}}' data-on-text='Pending' data-off-text="{{$count}} / 28"></input>
+                          <input type="checkbox" class="shift" id='shift_{{$shifts[$counter]->id}}'
+                                 data-on-text='{{$offText}}'
+                                 data-off-text="{{$count}} / 28" data-on-color={{$onColor}}></input>
                           <input type="hidden" name="shift_{{$shifts[$counter++]->id}}" value='0'>
 
 
