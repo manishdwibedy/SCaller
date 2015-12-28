@@ -48,9 +48,6 @@ class PageController extends Controller
             $shiftAvailability[$shift->shift_id] = $shiftInfo;
         }
 
-
-
-        //return view('schedule' , ['page' => 'schedule', 'shifts' => $shifts ]);
         return view('schedule' , ['page' => 'schedule',
                                         'shifts' => $shifts,
                                         'shiftAvailability' => $shiftAvailability,
@@ -65,11 +62,16 @@ class PageController extends Controller
     }
 
     public function viewCallerShifts(){
+        $nextSunday = date("Y-m-d", strtotime('next sunday'));
+        $date = new \DateTime($nextSunday);
+        $weekNumber = $date->format('W');
+
         $shiftSelected = DB::table('users')
                   ->join('caller_shifts', 'users.id', '=', 'caller_shifts.user_id')
                   ->join('shift_defination', 'shift_defination.id', '=', 'caller_shifts.shift_id')
                   ->select('users.id','users.name', 'shift_defination.shift_start', 'shift_defination.duration')
                   ->where('shift_defination.active', 1)
+                  ->where('caller_shifts.weeknumber', $weekNumber)
                   ->get();
         Log::info('user id '. Auth::user()->id);
         Log::info('count '. count($shiftSelected) );

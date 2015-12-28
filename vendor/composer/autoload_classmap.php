@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Absolute_Positioner' => $vendorDir . '/dompdf/dompdf/include/absolute_positioner.cls.php',
     'Abstract_Renderer' => $vendorDir . '/dompdf/dompdf/include/abstract_renderer.cls.php',
+    'AddActiveShift' => $baseDir . '/database/migrations/2015_12_27_235655_AddActiveShift.php',
     'AddActiveShifts' => $baseDir . '/database/migrations/2015_12_23_002051_AddActiveShifts.php',
     'AddTypeUsers' => $baseDir . '/database/migrations/2015_12_14_225430_add_type_users.php',
     'AddWeekYearCallerShift' => $baseDir . '/database/migrations/2015_12_23_153107_AddWeekYear_CallerShift.php',
