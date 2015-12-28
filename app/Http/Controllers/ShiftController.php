@@ -77,8 +77,9 @@ class ShiftController extends Controller
             $CallerShift->weekNumber = $week;
             $CallerShift->year = $year;
 
-            $shiftPresent = \App\CallerShift
-                            ::where('user_id', Auth::user()->id)
+            Log::info('shift is ' . substr($key,6));
+            $shiftPresent = \App\CallerShift::withTrashed()
+                            ->where('user_id', Auth::user()->id)
                             ->where('shift_id', substr($key,6))
                             ->where('weekNumber', $week)
                             ->where('year', $year)
@@ -87,7 +88,13 @@ class ShiftController extends Controller
             // Saving only if the shift not present
             if($shiftPresent->count() == 0)
             {
-              $CallerShift->save();
+                Log::info('need to save the shift');
+                $shiftPresent[0]->save();
+            }
+            else
+            {
+                Log::info('need to restore the shift');
+                $shiftPresent[0]->restore();
             }
           }
           else
@@ -109,10 +116,7 @@ class ShiftController extends Controller
             // Saving only if the shift not present
             if($shiftPresent->count() != 0)
             {
-              Log::info('Trying to delete' . $shiftPresent[0] -> id);
               $shiftPresent[0]->delete();
-              dd(DB::getQueryLog());
-
             }
           }
         }
@@ -120,6 +124,7 @@ class ShiftController extends Controller
         $currentShifts = DB::table('caller_shifts')
                                 ->select('shift_id', DB::raw('count(*) as total'))
                                 ->where('weeknumber', $week)
+                                ->whereNull('deleted_at')
                                 ->groupBy('shift_id')
                                 ->get();
         $shiftAvailability = array();
@@ -131,8 +136,13 @@ class ShiftController extends Controller
             $shiftAvailability[$shift->shift_id] = $shiftInfo;
         }
 
-        $caller_shifts = \App\CallerShift::where('user_id', Auth::user()->id)->get();
+        $caller_shifts = \App\CallerShift::where('user_id', Auth::user()->id)
+                            ->where('weeknumber', $week)
+                            ->whereNull('deleted_at')
+                            ->get();
+        Log::info('no. of shifts - '.$caller_shifts->count());
         $shifts = DB::table('shift_defination')->get();
+
 
         return view('schedule' , ['page' => 'manage-schedule', 'shifts' => $shifts,
                                     'saved' => true, 'caller_shifts' => $caller_shifts,

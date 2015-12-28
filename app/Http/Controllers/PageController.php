@@ -24,13 +24,13 @@ class PageController extends Controller
         $nextSunday = date("Y-m-d", strtotime('next sunday'));
         $date = new \DateTime($nextSunday);
         $weekNumber = $date->format('W');
-        Log::info('weekNumber is '. $weekNumber);
-
+        Log::info('->>weekNumber is '. $weekNumber);
+        Log::info('\n\n\n\n');
         $caller_shifts = \App\CallerShift::
                             where('user_id', Auth::user()->id)
                             ->where('weeknumber', $weekNumber)
                             ->get();
-        Log::info('shifts is '. $caller_shifts);
+        Log::info('::::::::::::shifts is '. $caller_shifts);
 
         $currentShifts = DB::table('caller_shifts')
                                 ->select('shift_id', DB::raw('count(*) as total'))
