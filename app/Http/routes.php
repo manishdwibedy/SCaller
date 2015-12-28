@@ -45,11 +45,15 @@ Route::get('export-pdf', 'ShiftController@exportToPDF');
 Route::get('create-users', 'PageController@createUsers');
 Route::post('create-users', 'CreateUsers@createUsers');
 
-//
+// Resting the password for inactive users
 Route::get('reset-password', 'Auth\PasswordController@getEmail');
 Route::post('reset-password', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
+//
 Route::get('activateAccount', 'LoginController@showActivateAccount');
 Route::post('activateAccount', 'LoginController@activateAccount');
+
+//
+Route::get('reminder', 'ReminderController@showReminder');

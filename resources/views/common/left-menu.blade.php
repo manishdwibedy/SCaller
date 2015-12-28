@@ -62,6 +62,13 @@
           <span>Create Users</span>
         </a>
       </li>
+
+      <li class="{{ $page === 'reminder' ? 'active' : ''}} treeview">
+        <a href="create-users">
+          <i class="fa fa-files-o"></i>
+          <span>Manage Reminder</span>
+        </a>
+      </li>
       @endif
 
       <li>
