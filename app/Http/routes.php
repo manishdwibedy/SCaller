@@ -13,8 +13,8 @@
 
 */
 // Authentication routes...
-Route::get('/', 'LoginController@showLogin');
-Route::post('auth/login', 'LoginController@attemptLogin');
+Route::get('/', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'LoginController@logout');
 
 // Home Page
