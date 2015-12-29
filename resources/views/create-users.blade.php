@@ -125,8 +125,12 @@
                   <br>
                   <select class="userType" name='userType'>
                       <option value='caller'>Callers</option>
+                      @if (Entrust::hasRole('manager'))
                       <option value='supervisor'>Supervisors</option>
+                      @endif
+                      @if (Entrust::hasRole('admin'))
                       <option value='manager'>Managers</option>
+                      @endif
                   </select>
 
                 </div>
