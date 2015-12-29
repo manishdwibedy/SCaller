@@ -6,8 +6,11 @@
 
     {!! HTML::style('css/bootstrap-switch.css') !!}
     {!! HTML::style('css/multiple-emails.css') !!}
+    {!! HTML::style('css/bootstrap-select.min.css') !!}
+
     {!! HTML::script('js/bootstrap-switch.js') !!}
     {!! HTML::script('js/multiple-emails.js') !!}
+    {!! HTML::script('js/bootstrap-select.min.js') !!}
 
     <script>
     $(document).ready(function() {
@@ -15,6 +18,10 @@
            position: 'top', // Display the added emails above the input
            theme: 'bootstrap', // Bootstrap is the default theme
            checkDupEmail: true // Should check for duplicate emails added
+        });
+
+        $('.userType').selectpicker({
+          style: 'btn-info'
         });
 
     });
@@ -112,6 +119,17 @@
 
                 {!! Form::open(array( 'method' => 'post', 'url' => 'create-users', 'onsubmit' => 'createUsers(this); return false;')) !!}
                 {!! csrf_field() !!}
+
+                <div class="form-group">
+                  <label for="comment">Type of users:</label>
+                  <br>
+                  <select class="userType" name='userType'>
+                      <option value='caller'>Callers</option>
+                      <option value='supervisor'>Supervisors</option>
+                      <option value='manager'>Managers</option>
+                  </select>
+
+                </div>
 
                 <div class="form-group">
                   <label for="comment">User to add:</label>

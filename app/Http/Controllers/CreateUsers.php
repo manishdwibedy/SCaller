@@ -17,7 +17,9 @@ class CreateUsers extends Controller
     public function createUsers()
     {
         $inputs = Request::all();
+        $userType = Request::input('userType');
 
+        Log::info('user type is ' . $userType);
         $emails = json_decode(Request::input('users'));
         foreach($emails as $email)
         {
@@ -33,7 +35,7 @@ class CreateUsers extends Controller
 
             // Making a caller user
             $user = \App\User::where('name', '=', $email)->first();
-            $caller = \App\Role::where('name', '=', 'caller')->first();
+            $caller = \App\Role::where('name', '=', $userType)->first();
 
             // role attach alias
             $user->attachRole($caller); // parameter can be an Role object, array, or id
@@ -45,10 +47,10 @@ class CreateUsers extends Controller
                     );
 
             $this->sendLink($email);
-            // \Mail::send('mail.email', $data, function ($message) use ($data) {
-            //   $message->subject('Login Details ')
-            //           ->to('manish.dwibedy@gmail.com');
-            // });
+            \Mail::send('mail.email', $data, function ($message) use ($data) {
+              $message->subject('Login Details ')
+                      ->to('manish.dwibedy@gmail.com');
+            });
 
         }
         return view('create-users', ['page' => 'create-users']);
