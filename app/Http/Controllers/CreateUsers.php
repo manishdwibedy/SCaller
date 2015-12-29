@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Mail\Message;
 use Log;
 use DB;
+use Auth;
 
 class CreateUsers extends Controller
 {
@@ -20,39 +21,47 @@ class CreateUsers extends Controller
         $userType = Request::input('userType');
 
         Log::info('user type is ' . $userType);
-        $emails = json_decode(Request::input('users'));
-        foreach($emails as $email)
+
+        // Checking permission of user before creating new users
+        if( Auth::user()->hasRole('supervisor') && $userType == 'caller'
+            || Auth::user()->hasRole('manager') && ($userType == 'caller' || $userType == 'supervisor')
+            || Auth::user()->hasRole('admin'))
         {
-            Log::info ('username - ' . $email);
+            $emails = json_decode(Request::input('users'));
+            foreach($emails as $email)
+            {
+                Log::info ('username - ' . $email);
 
-            $password = str_random(10);
-            DB::table('users')->insert([
-                'name' => $email,
-                'email' => $email,
-                'password' => bcrypt($password),
-                'type' => 'caller'
-            ]);
+                $password = str_random(10);
+                DB::table('users')->insert([
+                    'name' => $email,
+                    'email' => $email,
+                    'password' => bcrypt($password),
+                    'type' => 'caller'
+                ]);
 
-            // Making a caller user
-            $user = \App\User::where('name', '=', $email)->first();
-            $caller = \App\Role::where('name', '=', $userType)->first();
+                // Making a caller user
+                $user = \App\User::where('name', '=', $email)->first();
+                $caller = \App\Role::where('name', '=', $userType)->first();
 
-            // role attach alias
-            $user->attachRole($caller); // parameter can be an Role object, array, or id
+                // role attach alias
+                $user->attachRole($caller); // parameter can be an Role object, array, or id
 
-            $data = array(
-                        'name' => $email,
-                        'username' => $email,
-                        'password' => $password
-                    );
+                $data = array(
+                            'name' => $email,
+                            'username' => $email,
+                            'password' => $password
+                        );
 
-            $this->sendLink($email);
-            \Mail::send('mail.email', $data, function ($message) use ($data) {
-              $message->subject('Login Details ')
-                      ->to('manish.dwibedy@gmail.com');
-            });
+                $this->sendLink($email);
+                \Mail::send('mail.email', $data, function ($message) use ($data) {
+                  $message->subject('Login Details ')
+                          ->to('manish.dwibedy@gmail.com');
+                });
 
+            }
         }
+
         return view('create-users', ['page' => 'create-users']);
     }
 
