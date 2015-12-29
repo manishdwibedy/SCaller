@@ -57,3 +57,4 @@ Route::post('activateAccount', 'LoginController@activateAccount');
 
 //
 Route::get('reminder', 'ReminderController@showReminder');
+Route::post('reminder', 'ReminderController@setReminder');

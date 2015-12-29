@@ -15,4 +15,10 @@ class ReminderController extends Controller
         //return view('reminder')->with('page' => 'reminder');
         return view('reminder' , ['page' => 'reminder']);
     }
+
+    public function setReminder()
+    {
+        //return view('reminder')->with('page' => 'reminder');
+        return view('reminder' , ['page' => 'reminder']);
+    }
 }
