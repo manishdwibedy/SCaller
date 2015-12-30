@@ -12,9 +12,12 @@ I am hereby submitting my shift schedule. <br><br>
             {{ $shift->date}}
         </td>
         <td>
-            {{$shift->shift}}
+            @foreach($shift->shift as $data)
+                {{$data}}
+            @endforeach
+
         </td>
-    </tr>    
+    </tr>
     @endforeach
 
 </table>

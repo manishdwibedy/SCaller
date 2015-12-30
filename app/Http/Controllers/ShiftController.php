@@ -167,8 +167,8 @@ class ShiftController extends Controller
 
             $shiftScheduled = DB::table('caller_shifts')
                                 ->join('shift_defination', 'caller_shifts.shift_id', '=', 'shift_defination.id')
-                                ->where('caller_shifts.user_id', 3)
-                                ->where('caller_shifts.weeknumber',53)
+                                ->where('caller_shifts.user_id', Auth::user()->id)
+                                ->where('caller_shifts.weeknumber',$week)
                                 ->whereNull('caller_shifts.deleted_at')
                                 ->select(DB::raw('substr(shift_defination.name, 1, 3) as name') , 'duration', DB::raw('substr(shift_start,12) as start'))
                                 ->get();
@@ -177,13 +177,58 @@ class ShiftController extends Controller
 
             $sno = 1;
             $confirmationShifts = array();
+
+            $dayWiseShifts = array();
+            foreach($shiftScheduled as $shift)
+            {
+                if(array_key_exists($shift->name, $dayWiseShifts))
+                {
+                    $selectedShifts = $dayWiseShifts[$shift->name];
+                    array_push($selectedShifts, $shift->start);
+                    $dayWiseShifts[$shift->name] = $selectedShifts;
+                }
+                else
+                {
+                    $dayWiseShifts[$shift->name] = array($shift->start);
+                }
+            }
+
+            // foreach($dayWiseShifts as $day => $shifts1)
+            // {
+            //     Log::info ($day . ' -> ');
+            //     foreach($shifts1 as $shift)
+            //     {
+            //         Log::info ($shift);
+            //     }
+            // }
+            $daysSeen = array();
             foreach($shiftScheduled as $shift)
             {
                 $callerShift = new \stdClass();
                 $callerShift->sno = $sno++;
                 $callerShift->date = date("D d F Y", strtotime('next ' . $dayMapping[strtolower($shift->name)]));
-                $callerShift->shift = $shift->start;
-                array_push($confirmationShifts, $callerShift);
+                $callerShift->shift = $dayWiseShifts[$shift->name];
+
+                Log::info('daysSeen are ');
+                foreach($daysSeen as $day)
+                {
+                    Log::info($day);
+                }
+                if(!in_array($callerShift->date, $daysSeen))
+                {
+                    Log::info('pushing '. $callerShift->date);
+                    array_push($daysSeen, $callerShift->date);
+                    array_push($confirmationShifts, $callerShift);
+                }
+            }
+
+            foreach($confirmationShifts as $shift)
+            {
+                Log::info ($shift->date . ' -> ');
+                foreach($shift->shift as $shiftData)
+                {
+                    Log::info ($shiftData);
+                }
             }
             $data = array(
                         'name' => Auth::user()->name,
