@@ -20,7 +20,7 @@ class LoadShiftDefination extends Seeder
             'Mon',
             'Tue',
             'Wed',
-            'Thur',
+            'Thu',
             'Fri',
             'Sat',
             'Sun',

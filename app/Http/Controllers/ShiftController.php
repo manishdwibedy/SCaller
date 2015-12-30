@@ -164,9 +164,30 @@ class ShiftController extends Controller
                             ->get()[0]
                             ->value;
             Log::info($managerEmail);
+
+            $shiftScheduled = DB::table('caller_shifts')
+                                ->join('shift_defination', 'caller_shifts.shift_id', '=', 'shift_defination.id')
+                                ->where('caller_shifts.user_id', 3)
+                                ->where('caller_shifts.weeknumber',53)
+                                ->whereNull('caller_shifts.deleted_at')
+                                ->select(DB::raw('substr(shift_defination.name, 1, 3) as name') , 'duration', DB::raw('substr(shift_start,12) as start'))
+                                ->get();
+
+            $dayMapping = array('sun' => 'sunday','mon' => 'monday', 'tue' => 'tuesday', 'wed' => 'wednesday', 'thr' => 'thursday' , 'fri' => 'friday', 'sat' => 'saturday')  ;
+
+            $sno = 1;
+            $confirmationShifts = array();
+            foreach($shiftScheduled as $shift)
+            {
+                $callerShift = new \stdClass();
+                $callerShift->sno = $sno++;
+                $callerShift->date = date("Y-m-d", strtotime('next ' . $dayMapping[strtolower($shift->name)]));
+                $callerShift->shift = $shift->start;
+                array_push($confirmationShifts, $callerShift);
+            }
             $data = array(
                         'name' => Auth::user()->name,
-                        'shifts' => $caller_shifts,
+                        'shifts' => $confirmationShifts,
                         'managerEmail' => $managerEmail
                     );
 
