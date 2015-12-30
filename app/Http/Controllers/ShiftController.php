@@ -185,8 +185,6 @@ class ShiftController extends Controller
                 {
                     $selectedShifts = $dayWiseShifts[$shift->name];
                     array_push($selectedShifts, \Carbon\Carbon::parse($shift->shift_start)->format('h:i A'));
-
-
                     $dayWiseShifts[$shift->name] = $selectedShifts;
                 }
                 else
@@ -196,6 +194,7 @@ class ShiftController extends Controller
             }
 
             $daysSeen = array();
+            $totalShifts = 0;
             foreach($shiftScheduled as $shift)
             {
                 $callerShift = new \stdClass();
@@ -206,6 +205,7 @@ class ShiftController extends Controller
                 // Skipping the day already covered
                 if(!in_array($callerShift->date, $daysSeen))
                 {
+                    $totalShifts += count($callerShift->shift);
                     array_push($daysSeen, $callerShift->date);
                     array_push($confirmationShifts, $callerShift);
                 }
@@ -214,7 +214,8 @@ class ShiftController extends Controller
             $data = array(
                         'name' => Auth::user()->name,
                         'shifts' => $confirmationShifts,
-                        'managerEmail' => $managerEmail
+                        'managerEmail' => $managerEmail,
+                        'totalShifts' => $totalShifts
                     );
 
             \Mail::send('mail.shiftConfirmation', $data, function ($message) use ($data) {

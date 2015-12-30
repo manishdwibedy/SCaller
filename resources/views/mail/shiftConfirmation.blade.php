@@ -20,7 +20,9 @@ I am hereby submitting my shift schedule. <br><br>
     </tr>
     @endforeach
 
-</table>
+</table><br><br>
+
+Total Shifts: {{$totalShifts}} ({{$totalShifts * 2}} hours)
 <br><br>
 Fight on!!<br><br>
 
