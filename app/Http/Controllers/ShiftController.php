@@ -181,7 +181,7 @@ class ShiftController extends Controller
             {
                 $callerShift = new \stdClass();
                 $callerShift->sno = $sno++;
-                $callerShift->date = date("Y-m-d", strtotime('next ' . $dayMapping[strtolower($shift->name)]));
+                $callerShift->date = date("D d F Y", strtotime('next ' . $dayMapping[strtolower($shift->name)]));
                 $callerShift->shift = $shift->start;
                 array_push($confirmationShifts, $callerShift);
             }
