@@ -123,7 +123,7 @@
                 <div class="form-group">
                   <label for="comment">Type of users:</label>
                   <br>
-                  <select class="userType" name='userType'>
+                  <select class="userType" name='userType[]' multiple>
                       <option value='caller'>Callers</option>
                       @if (Entrust::hasRole('manager'))
                       <option value='supervisor'>Supervisors</option>
