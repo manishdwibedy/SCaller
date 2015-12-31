@@ -65,9 +65,15 @@
           <li class="{{ $page === 'create-users' ? 'active' : ''}}">
               <a href="create-users"><i class="fa fa-circle-o"></i>Create Users</a>
           </li>
-          <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i>View Users</a></li>
-          <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i>Update Users</a></li>
-          <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i>Delete Users</a></li>
+          <li class="{{ $page === 'view-users' ? 'active' : ''}}">
+              <a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i>View Users</a>
+          </li>
+          <li class="{{ $page === 'update-users' ? 'active' : ''}}">
+              <a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i>Update Users</a>
+          </li>
+          <li class="{{ $page === 'delete-users' ? 'active' : ''}}">
+              <a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i>Delete Users</a>
+          </li>
         </ul>
       </li>
 
