@@ -56,7 +56,7 @@
         </a>
       </li>
 
-      <li class="{{ $page === 'create-users' ? 'active' : ''}} treeview">
+      <li class="{{ str_contains( $page, '-users') ? 'active' : ''}} treeview">
         <a href="#">
           <i class="fa fa-files-o"></i>
           <span>Manage Users</span>
@@ -66,7 +66,7 @@
               <a href="create-users"><i class="fa fa-circle-o"></i>Create Users</a>
           </li>
           <li class="{{ $page === 'view-users' ? 'active' : ''}}">
-              <a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i>View Users</a>
+              <a href="view-users"><i class="fa fa-circle-o"></i>View Users</a>
           </li>
           <li class="{{ $page === 'update-users' ? 'active' : ''}}">
               <a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i>Update Users</a>

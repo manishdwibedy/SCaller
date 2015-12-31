@@ -44,6 +44,8 @@ Route::get('export-pdf', 'ShiftController@exportToPDF');
 // Creating users
 Route::get('create-users', 'PageController@createUsers');
 Route::post('create-users', 'CreateUsers@createUsers');
+Route::get('view-users', 'CreateUsers@viewUsers');
+
 
 // Resting the password for inactive users
 Route::get('reset-password', 'Auth\PasswordController@getEmail');

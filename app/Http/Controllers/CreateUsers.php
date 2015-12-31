@@ -83,8 +83,13 @@ class CreateUsers extends Controller
         }
     }
 
-    function checkPermissions()
+    public function viewUsers()
     {
-
+        $users = DB::table('users')
+                    ->join('role_user', 'users.id', '=', 'role_user.user_id')
+                    //->join('roles', 'roles.id', '=', 'role_user.user_id')
+                    ->where('role_user.role_id', '>' , 2)
+                    ->get();
+        return view('view-users', ['page' => 'view-users', 'users' => $users]);
     }
 }
