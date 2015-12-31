@@ -57,10 +57,18 @@
       </li>
 
       <li class="{{ $page === 'create-users' ? 'active' : ''}} treeview">
-        <a href="create-users">
+        <a href="#">
           <i class="fa fa-files-o"></i>
-          <span>Create Users</span>
+          <span>Manage Users</span>
         </a>
+        <ul class="treeview-menu">
+          <li class="{{ $page === 'create-users' ? 'active' : ''}}">
+              <a href="create-users"><i class="fa fa-circle-o"></i>Create Users</a>
+          </li>
+          <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i>View Users</a></li>
+          <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i>Update Users</a></li>
+          <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i>Delete Users</a></li>
+        </ul>
       </li>
 
       <li class="{{ $page === 'reminder' ? 'active' : ''}} treeview">
