@@ -4,6 +4,9 @@
 <!-- Tell the browser to be responsive to screen width -->
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
+<link rel="shortcut icon" href="{{ asset('images/logo.png') }}">
+
+
 <!-- Bootstrap 3.3.5 -->
 {!! HTML::style('bootstrap/css/bootstrap.min.css') !!}
 
