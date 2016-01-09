@@ -51,11 +51,14 @@ class MessageController extends Controller
                 'last_read' => new Carbon,
             ]
         );
+
         // Recipients
-        if (Input::has('recipients')) {
-            $thread->addParticipants($input['recipients']);
+        if (Input::has('users')) {
+            $users = $input['users'];
+            $recipients = explode(',',$users);
+            $thread->addParticipants($recipients);
         }
-        return redirect('messages.create');
+        //return redirect('messages.create');
 
         return view('messages.create', ['page' => 'message', 'users' => $users]);
     }

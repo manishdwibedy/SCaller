@@ -47,7 +47,7 @@
                 // add the selected item
                 terms.push( ui.item.value );
                 // add placeholder to get the comma-and-space at the end
-                terms.push( "" );
+                //terms.push( "" );
                 this.value = terms.join( "," );
 
                 return false;
@@ -85,7 +85,7 @@
                     <!-- Users Form Input -->
                     <div class="form-group">
                         {!! Form::label('users', 'Users', ['class' => 'control-label']) !!}
-                        {!! Form::text('users', null, ['id' =>  'users', 'class' => 'form-control']) !!}
+                        {!! Form::text('users', null, ['id' =>  'users', 'name' => 'users', 'class' => 'form-control']) !!}
                     </div>
 
                     <!-- Subject Form Input -->
