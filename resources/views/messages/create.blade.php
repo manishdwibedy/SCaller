@@ -4,6 +4,11 @@
     @include('common.head')
     @include('common.scripts')
 
+    {!! HTML::style('css/jquery-ui.min.css') !!}
+    {!! HTML::style('css/jquery-ui.theme.min.css') !!}
+    {!! HTML::style('css/jquery-ui.structure.min.css') !!}
+    {!! HTML::script('js/jquery-ui.min.js') !!}
+    
     <script>
         $(function()
         {
