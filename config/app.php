@@ -148,7 +148,13 @@ return [
         Illuminate\Html\HtmlServiceProvider::class,
 
         Zizaco\Entrust\EntrustServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
+        /*
+         * User messager
+         */
+        Cmgmyr\Messenger\MessengerServiceProvider::class,
+
 
 
     ],

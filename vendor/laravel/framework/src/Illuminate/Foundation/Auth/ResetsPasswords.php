@@ -7,7 +7,6 @@ use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Log;
 
 trait ResetsPasswords
 {
@@ -68,15 +67,7 @@ trait ResetsPasswords
             throw new NotFoundHttpException;
         }
 
-        // Getting the user's name to be shown on the reset page
-        $user = \DB::table('password_resets')->where('token', $token)->first();
-
-        $data = array(
-            'token'  => $token,
-            'email' => $user->email
-        );
-
-        return view('auth.reset')->with('data', $data);
+        return view('auth.reset')->with('token', $token);
     }
 
     /**
@@ -89,19 +80,13 @@ trait ResetsPasswords
     {
         $this->validate($request, [
             'token' => 'required',
-            'name' => 'required',
             'email' => 'required|email',
             'password' => 'required|confirmed|min:6',
         ]);
 
         $credentials = $request->only(
-            'email', 'password', 'password_confirmation', 'token'//, 'name'
+            'email', 'password', 'password_confirmation', 'token'
         );
-
-        // Updating the user's name when activating account
-        \DB::table('users')
-            ->where('email', $request->input('email'))
-            ->update(['name' => $request->input('name')]);
 
         $response = Password::reset($credentials, function ($user, $password) {
             $this->resetPassword($user, $password);
@@ -110,7 +95,8 @@ trait ResetsPasswords
         switch ($response) {
             case Password::PASSWORD_RESET:
                 return redirect($this->redirectPath())->with('status', trans($response));
-        default:
+
+            default:
                 return redirect()->back()
                             ->withInput($request->only('email'))
                             ->withErrors(['email' => trans($response)]);
@@ -127,7 +113,9 @@ trait ResetsPasswords
     protected function resetPassword($user, $password)
     {
         $user->password = bcrypt($password);
+
         $user->save();
+
         Auth::login($user);
     }
 }
