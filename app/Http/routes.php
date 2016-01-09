@@ -60,3 +60,7 @@ Route::post('activateAccount', 'LoginController@activateAccount');
 //
 Route::get('reminder', 'ReminderController@showReminder');
 Route::post('reminder', 'ReminderController@setReminder');
+
+// User messaging system
+Route::get('new-message', 'MessageController@newMessage');
+Route::post('new-message', 'MessageController@sendMessage');
