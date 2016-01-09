@@ -12,7 +12,8 @@ use Cmgmyr\Messenger\Models\Message;
 use Cmgmyr\Messenger\Models\Participant;
 use Cmgmyr\Messenger\Models\Thread;
 use Carbon\Carbon;
-
+use DB;
+use Response;
 
 class MessageController extends Controller
 {
@@ -56,5 +57,21 @@ class MessageController extends Controller
         return redirect('messages.create');
 
         return view('messages.create', ['page' => 'message', 'users' => $users]);
+    }
+
+    public function getUsers(){
+    	$term = Input::get('term');
+
+    	$results = array();
+
+    	$queries = DB::table('users')
+    		->where('email', 'LIKE', '%'.$term.'%')
+    		->take(5)->get();
+
+    	foreach ($queries as $query)
+    	{
+    	    $results[] = [ 'id' => $query->id, 'value' => $query->email ];
+    	}
+        return Response::json($results);
     }
 }

@@ -3,6 +3,20 @@
   <head>
     @include('common.head')
     @include('common.scripts')
+
+    <script>
+        $(function()
+        {
+        	 $( "#users" ).autocomplete({
+        	  source: "searchUsers",
+        	  minLength: 3,
+              multiple:true,
+        	  select: function(event, ui) {
+        	  	$('#users').val(ui.item.value);
+        	  }
+        	});
+        });
+    </script>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -29,6 +43,12 @@
           <div class="container-fluid">
                 {!! Form::open(['method' => 'post', 'url' => 'new-message']) !!}
                 <div class="col-md-6">
+                    <!-- Users Form Input -->
+                    <div class="form-group">
+                        {!! Form::label('users', 'Subject', ['class' => 'control-label']) !!}
+                        {!! Form::text('users', null, ['id' =>  'users', 'class' => 'control-label', 'placeholder' =>  'Enter name']) !!}
+                    </div>
+
                     <!-- Subject Form Input -->
                     <div class="form-group">
                         {!! Form::label('subject', 'Subject', ['class' => 'control-label']) !!}
