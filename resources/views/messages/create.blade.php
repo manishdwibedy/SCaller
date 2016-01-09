@@ -8,16 +8,48 @@
     {!! HTML::style('css/jquery-ui.theme.min.css') !!}
     {!! HTML::style('css/jquery-ui.structure.min.css') !!}
     {!! HTML::script('js/jquery-ui.min.js') !!}
-    
+
     <script>
+
+        function split( val ) {
+          return val.split( /,\s*/ );
+        }
+        function extractLast( term ) {
+          return split( term ).pop();
+        }
+
         $(function()
         {
         	 $( "#users" ).autocomplete({
-        	  source: "searchUsers",
+                source: function( request, response ) {
+                $.ajax({
+                    url: "searchUsers",
+                    dataType: "json",
+                    data: { searchText: extractLast(request.term) },
+                    success: function( data ) {
+                        response( $.map( data, function( item ) {
+                            return {    label: item.value,
+                                        value: item.value   , //value: item.route_name+', '+item.route_grade+', '+item.area_name,
+                                        id: item.id,
+                                        route_grade: item.value,
+
+                                        }
+                        }));
+                    }
+                });
+              },
         	  minLength: 3,
               multiple:true,
         	  select: function(event, ui) {
-        	  	$('#users').val(ui.item.value);
+                  var terms = split( this.value );
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push( ui.item.value );
+                // add placeholder to get the comma-and-space at the end
+                terms.push( "" );
+                this.value = terms.join( "," );
+        	  	//$('#users').append(ui.item.value);
         	  }
         	});
         });
@@ -50,8 +82,8 @@
                 <div class="col-md-6">
                     <!-- Users Form Input -->
                     <div class="form-group">
-                        {!! Form::label('users', 'Subject', ['class' => 'control-label']) !!}
-                        {!! Form::text('users', null, ['id' =>  'users', 'class' => 'control-label', 'placeholder' =>  'Enter name']) !!}
+                        {!! Form::label('users', 'Users', ['class' => 'control-label']) !!}
+                        {!! Form::text('users', null, ['id' =>  'users', 'class' => 'form-control']) !!}
                     </div>
 
                     <!-- Subject Form Input -->
