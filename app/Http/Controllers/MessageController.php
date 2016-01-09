@@ -14,6 +14,7 @@ use Cmgmyr\Messenger\Models\Thread;
 use Carbon\Carbon;
 use DB;
 use Response;
+use Log;
 
 class MessageController extends Controller
 {
@@ -60,10 +61,11 @@ class MessageController extends Controller
     }
 
     public function getUsers(){
-    	$term = Input::get('term');
+    	$term = Input::get('searchText');
 
     	$results = array();
 
+        Log::info('searching for users with emails like ' . $term);
     	$queries = DB::table('users')
     		->where('email', 'LIKE', '%'.$term.'%')
     		->take(5)->get();
