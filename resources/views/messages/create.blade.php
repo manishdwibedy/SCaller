@@ -100,14 +100,6 @@
                         {!! Form::textarea('message', null, ['class' => 'form-control']) !!}
                     </div>
 
-                    @if($users->count() > 0)
-                    <div class="checkbox">
-                        @foreach($users as $user)
-                            <label title="{!!$user->name!!}"><input type="checkbox" name="recipients[]" value="{!!$user->id!!}">{!!$user->name!!}</label>
-                        @endforeach
-                    </div>
-                    @endif
-
                     <!-- Submit Form Input -->
                     <div class="form-group">
                         {!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}
