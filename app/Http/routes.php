@@ -65,4 +65,4 @@ Route::post('reminder', 'ReminderController@setReminder');
 Route::get('new-message', 'MessageController@newMessage');
 Route::post('new-message', 'MessageController@sendMessage');
 Route::get('searchUsers', 'MessageController@getUsers');
-Route::get('getTheads', 'MessageController@getThreads');
+Route::get('getMessages', ['middleware' => 'auth', 'uses' => 'MessageController@getThreads']);

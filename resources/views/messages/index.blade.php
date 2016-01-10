@@ -4,6 +4,20 @@
     @include('common.head')
     @include('common.scripts')
 
+<style>
+
+.nav-tabs .glyphicon:not(.no-margin) { margin-right:10px; }
+.tab-pane .list-group-item:first-child {border-top-right-radius: 0px;border-top-left-radius: 0px;}
+.tab-pane .list-group-item:last-child {border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;}
+.tab-pane .list-group .checkbox { display: inline-block;margin: 0px; }
+.tab-pane .list-group input[type="checkbox"]{ margin-top: 44%; }
+.tab-pane .list-group .glyphicon { margin-right:5px; }
+.tab-pane .list-group .glyphicon:hover { color:#FFBC00; }
+a.list-group-item.read { color: #222;background-color: #F3F3F3; }
+hr { margin-top: 5px;margin-bottom: 10px; }
+.nav-pills>li>a {padding: 5px 10px;}
+
+</style>
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -17,35 +31,70 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            New Message
+            Inbox
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Create New Message</li>
+            <li class="active">Inbox</li>
           </ol>
         </section>
 
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
-              @if (Session::has('error_message'))
-                  <div class="alert alert-danger" role="alert">
-                      {!! Session::get('error_message') !!}
-                  </div>
-              @endif
-              @if($threads->count() > 0)
-                  @foreach($threads as $thread)
-                  <?php $class = $thread->isUnread($currentUserId) ? 'alert-info' : ''; ?>
-                  <div class="media alert {!!$class!!}">
-                      <h4 class="media-heading">{!! link_to('messages/' . $thread->id, $thread->subject) !!}</h4>
-                      <p>{!! $thread->latestMessage->body !!}</p>
-                      <p><small><strong>Creator:</strong> {!! $thread->creator()->name !!}</small></p>
-                      <p><small><strong>Participants:</strong> {!! $thread->participantsString(Auth::id()) !!}</small></p>
-                  </div>
-                  @endforeach
-              @else
-                  <p>Sorry, no threads.</p>
-              @endif
+
+
+              <div class="tab-content">
+                <div class="tab-pane fade in active" id="home">
+                    <div class="list-group">
+                        @foreach($threads as $thread)
+                        <a href="#" class="list-group-item">
+                            <span class="checkbox">
+                                <label>
+                                    <input type="checkbox">
+                                </label>
+                            </span>
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                            <span class="name" style="min-width: 120px;
+                                display: inline-block;">
+                                {!! $thread->creator()->name !!}
+                            </span>
+                            <span class="">
+                                {!! $thread->subject !!}
+                            </span>
+                            <span class="text-muted" style="font-size: 11px;">
+                                {!! $thread->latestMessage->body !!}
+                            </span>
+                            <span class="badge">
+                                @if (Carbon\Carbon::parse($thread->created_at)->format('d/m/Y')
+                                            == Carbon\Carbon::parse(Carbon\Carbon::now())->format('d/m/Y'))
+                                    {!! Carbon\Carbon::parse($thread->created_at)->format('h:i A') !!}
+                                @else
+                                    {!! Carbon\Carbon::parse($thread->created_at)->format('d/m/Y') !!}
+                                @endif
+
+                            </span>
+                            <span class="pull-right">
+                                <span class="glyphicon glyphicon-paperclip">
+                                </span>
+                            </span>
+                        </a>
+                        @endforeach
+
+                    </div>
+                </div>
+                <div class="tab-pane fade in" id="profile">
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <span class="text-center">This tab is empty.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade in" id="messages">
+                    ...</div>
+                <div class="tab-pane fade in" id="settings">
+                    This tab is empty.</div>
+            </div>
           </div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
