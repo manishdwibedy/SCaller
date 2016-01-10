@@ -75,8 +75,11 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 
                             </span>
                             <span class="pull-right">
-                                <span class="glyphicon glyphicon-paperclip">
-                                </span>
+                                <!--
+                                    Not using attachments
+                                    <span class="glyphicon glyphicon-paperclip">
+                                -->
+                            </span>
                             </span>
                         </a>
                         @endforeach
