@@ -48,7 +48,7 @@ hr { margin-top: 5px;margin-bottom: 10px; }
                 <div class="tab-pane fade in active" id="home">
                     <div class="list-group">
                         @foreach($threads as $thread)
-                        <a href="#" class="list-group-item">
+                        <a href="getMessages/{{ $thread->id }}" class="list-group-item">
                             <span class="checkbox">
                                 <label>
                                     <input type="checkbox">

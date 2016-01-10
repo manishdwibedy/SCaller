@@ -85,12 +85,29 @@ class MessageController extends Controller
         $currentUserId = Auth::user()->id;
         // All threads, ignore deleted/archived participants
         //$threads = Thread::getAllLatest()->get();
-        
+
         // All threads that user is participating in
          $threads = Thread::forUser($currentUserId)->latest('updated_at')->get();
         // All threads that user is participating in, with new messages
         // $threads = Thread::forUserWithNewMessages($currentUserId)->latest('updated_at')->get();
 
         return view('messages.index', ['page' => 'message', 'threads' => $threads, 'currentUserId' => $currentUserId]);
+    }
+
+    public function showMessage($id)
+    {
+        try {
+            $thread = Thread::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
+            return redirect('messages');
+        }
+        // show current user in list if not a current participant
+        // $users = User::whereNotIn('id', $thread->participantsUserIds())->get();
+        // don't show the current user in list
+        $userId = Auth::user()->id;
+        $users = \App\User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
+        $thread->markAsRead($userId);
+        return view('messages.show', ['page' => 'message', 'thread' => $thread, 'users' => $users]);
     }
 }
