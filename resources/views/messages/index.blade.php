@@ -44,7 +44,7 @@ hr { margin-top: 5px;margin-bottom: 10px; }
         <section class="content">
           <div class="row">
             <div class="col-md-3">
-              <a href="compose.html" class="btn btn-primary btn-block margin-bottom">Compose</a>
+              <a href="/new-message" class="btn btn-primary btn-block margin-bottom">Compose</a>
               <div class="box box-solid">
                 <div class="box-header with-border">
                   <h3 class="box-title">Folders</h3>
@@ -162,7 +162,7 @@ hr { margin-top: 5px;margin-bottom: 10px; }
         </section><!-- /.content -->
 
 
-        
+
       </div><!-- /.content-wrapper -->
 
       <!-- Footer -->
