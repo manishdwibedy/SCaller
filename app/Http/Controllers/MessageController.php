@@ -30,6 +30,7 @@ class MessageController extends Controller
     {
 
         $input = Input::all();
+
         $thread = Thread::create(
             [
                 'subject' => $input['subject'],
@@ -55,10 +56,21 @@ class MessageController extends Controller
         // Recipients
         if (Input::has('users')) {
             $users = $input['users'];
+
+            // got the users by email
             $recipients = explode(',',$users);
-            $thread->addParticipants($recipients);
+
+            $userIDs = DB::table('users')
+                                    ->whereIn('email', $recipients)
+                                    ->select('id')
+                                    ->get();
+            $threadParticipants = array();
+            foreach($userIDs as $userID)
+            {
+                array_push($threadParticipants,$userID->id);
+            }
+            $thread->addParticipants($threadParticipants);
         }
-        //return redirect('messages.create');
 
         return view('messages.create', ['page' => 'message', 'users' => $users]);
     }
