@@ -33,9 +33,9 @@
 
               @foreach($thread->messages as $message)
                   <div class="media">
-                      <a class="pull-left" href="#">
+                      <!-- <a class="pull-left" href="#">
                           <img src="//www.gravatar.com/avatar/{!! md5($message->user->email) !!}?s=64" alt="{!! $message->user->name !!}" class="img-circle">
-                      </a>
+                      </a> -->
                       <div class="media-body">
                           <h5 class="media-heading">{!! $message->user->name !!}</h5>
                           <p>{!! $message->body !!}</p>
@@ -45,23 +45,29 @@
               @endforeach
 
               <h2>Add a new message</h2>
-              {!! Form::open(['method' => 'PUT']) !!}
-              <!-- Message Form Input -->
-              <div class="form-group">
-                  {!! Form::textarea('message', null, ['class' => 'form-control']) !!}
-              </div>
+              {!! Form::open(['method' => 'post', 'url' => 'new-message']) !!}
+              <div class="col-md-6">
+                  <!-- Users Form Input -->
+                  <div class="form-group">
+                      {!! Form::label('users', 'Users', ['class' => 'control-label']) !!}
+                      {!! Form::text('users', null, ['id' =>  'users', 'name' => 'users', 'class' => 'form-control']) !!}
+                  </div>
 
-              @if($users->count() > 0)
-              <div class="checkbox">
-                  @foreach($users as $user)
-                      <label title="{!! $user->name !!}"><input type="checkbox" name="recipients[]" value="{!! $user->id !!}">{!! $user->name !!}</label>
-                  @endforeach
-              </div>
-              @endif
+                  <!-- Subject Form Input -->
+                  <div class="form-group">
+                      {!! Form::hidden('subject', $thread->subject, ['class' => 'form-control']) !!}
+                  </div>
 
-              <!-- Submit Form Input -->
-              <div class="form-group">
-                  {!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}
+                  <!-- Message Form Input -->
+                  <div class="form-group">
+                      {!! Form::label('message', 'Message', ['class' => 'control-label']) !!}
+                      {!! Form::textarea('message', null, ['class' => 'form-control']) !!}
+                  </div>
+
+                  <!-- Submit Form Input -->
+                  <div class="form-group">
+                      {!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}
+                  </div>
               </div>
               {!! Form::close() !!}
 
