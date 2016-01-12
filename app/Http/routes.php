@@ -67,3 +67,4 @@ Route::post('new-message', 'MessageController@sendMessage');
 Route::get('searchUsers', 'MessageController@getUsers');
 Route::get('getMessages', ['middleware' => 'auth', 'uses' => 'MessageController@getThreads']);
 Route::get('getMessages/{id}', ['uses' => 'MessageController@showMessage']);
+Route::post('updateThread/{id}', ['uses' => 'MessageController@updateThread']);

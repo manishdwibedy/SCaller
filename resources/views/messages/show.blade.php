@@ -45,7 +45,7 @@
               @endforeach
 
               <h2>Add a new message</h2>
-              {!! Form::open(['method' => 'post', 'url' => 'new-message']) !!}
+              {!! Form::open(['method' => 'post', 'url' => 'updateThread/' . $thread->id]) !!}
               <div class="col-md-6">
                   <!-- Users Form Input -->
                   <div class="form-group">
