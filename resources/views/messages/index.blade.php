@@ -48,40 +48,43 @@ hr { margin-top: 5px;margin-bottom: 10px; }
                 <div class="tab-pane fade in active" id="home">
                     <div class="list-group">
                         @foreach($threads as $thread)
-                        <a href="getMessages/{{ $thread->id }}" class="list-group-item">
-                            <span class="checkbox">
-                                <label>
-                                    <input type="checkbox">
-                                </label>
-                            </span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            <span class="name" style="min-width: 120px;
-                                display: inline-block;">
-                                {!! $thread->creator()->name !!}
-                            </span>
-                            <span class="">
-                                {!! $thread->subject !!}
-                            </span>
-                            <span class="text-muted" style="font-size: 11px;">
-                                {!! $thread->latestMessage->body !!}
-                            </span>
-                            <span class="badge">
-                                @if (Carbon\Carbon::parse($thread->created_at)->format('d/m/Y')
-                                            == Carbon\Carbon::parse(Carbon\Carbon::now())->format('d/m/Y'))
-                                    {!! Carbon\Carbon::parse($thread->created_at)->format('h:i A') !!}
-                                @else
-                                    {!! Carbon\Carbon::parse($thread->created_at)->format('d/m/Y') !!}
-                                @endif
+                            @if( $thread->messages[0]->user->id != Auth::user()->id )
+                            <a href="getMessages/{{ $thread->id }}" class="list-group-item">
+                                <span class="checkbox">
+                                    <label>
+                                        <input type="checkbox">
+                                    </label>
+                                </span>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                                <span class="name" style="min-width: 120px;
+                                    display: inline-block;">
+                                    {!! $thread->creator()->name !!}
+                                </span>
+                                <span class="">
+                                    {!! $thread->subject !!}
+                                </span>
+                                <span class="text-muted" style="font-size: 11px;">
+                                    {!! $thread->latestMessage->body !!}
+                                </span>
+                                <span class="badge">
+                                    @if (Carbon\Carbon::parse($thread->created_at)->format('d/m/Y')
+                                                == Carbon\Carbon::parse(Carbon\Carbon::now())->format('d/m/Y'))
+                                        {!! Carbon\Carbon::parse($thread->created_at)->format('h:i A') !!}
+                                    @else
+                                        {!! Carbon\Carbon::parse($thread->created_at)->format('d/m/Y') !!}
+                                    @endif
 
-                            </span>
-                            <span class="pull-right">
-                                <!--
-                                    Not using attachments
-                                    <span class="glyphicon glyphicon-paperclip">
-                                -->
-                            </span>
-                            </span>
-                        </a>
+                                </span>
+                                <span class="pull-right">
+                                    <!--
+                                        Not using attachments
+                                        <span class="glyphicon glyphicon-paperclip">
+                                    -->
+                                </span>
+                                </span>
+                            </a>
+                            @endif
+
                         @endforeach
 
                     </div>

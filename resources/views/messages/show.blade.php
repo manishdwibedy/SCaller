@@ -32,6 +32,7 @@
               <h1>{!! $thread->subject !!}</h1>
 
               @foreach($thread->messages as $message)
+
                    <div class="media">
                       <!-- <a class="pull-left" href="#">
                           <img src="//www.gravatar.com/avatar/{!! md5($message->user->email) !!}?s=64" alt="{!! $message->user->name !!}" class="img-circle">
