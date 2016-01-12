@@ -119,7 +119,7 @@ hr { margin-top: 5px;margin-bottom: 10px; }
                                       <a href="getMessages/{{ $thread->id }}">{!! $thread->creator()->name !!}</a>
                                   </td>
                                   <td class="mailbox-subject">
-                                      <b>{!! $thread->subject !!}</b> - {!! $thread->latestMessage->body !!}
+                                      <b>{!! $thread->subject !!}</b> - {{{ preg_replace('/(<.*?>)|(&.*?;)/', ' ', $thread->latestMessage->body) }}}
                                   </td>
                                   <td class="mailbox-attachment"></td>
                                   <td class="mailbox-date">
