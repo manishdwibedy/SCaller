@@ -55,8 +55,8 @@ hr { margin-top: 5px;margin-bottom: 10px; }
                 <div class="box-body no-padding">
                   <ul class="nav nav-pills nav-stacked">
                     <li class="active"><a href="#"><i class="fa fa-inbox"></i> Inbox <span class="label label-primary pull-right">12</span></a></li>
-                    <li><a href="/outbox"><i class="fa fa-envelope-o"></i> Sent</a></li>
-                    <li><a href="#"><i class="fa fa-file-text-o"></i> Drafts</a></li>
+                    <li><a href="#"><i class="fa fa-envelope-o"></i> Sent</a></li>
+                    <li><a href="outbox"><i class="fa fa-file-text-o"></i> Drafts</a></li>
                     <li><a href="#"><i class="fa fa-filter"></i> Junk <span class="label label-warning pull-right">65</span></a></li>
                     <li><a href="#"><i class="fa fa-trash-o"></i> Trash</a></li>
                   </ul>
@@ -111,7 +111,7 @@ hr { margin-top: 5px;margin-bottom: 10px; }
                     <table class="table table-hover table-striped">
                       <tbody>
                           @foreach($threads as $thread)
-                              @if( $thread->messages[0]->user->id != Auth::user()->id )
+                              @if( $thread->messages[3]->user->id == Auth::user()->id )
                                 <tr>
                                   <td><input type="checkbox"></td>
                                   <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
